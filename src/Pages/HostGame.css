@@ -1,0 +1,29 @@
+.host-game-container {
+    text-align: center;
+    padding: 50px;
+    background-color: #f0f0f0;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 50px auto;
+    width: 80%;
+    max-width: 600px;
+  }
+  
+  .host-game-container h1 {
+    color: #333;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+  }
+  
+  .code-display {
+    background-color: #e8e8e8;
+    padding: 20px;
+    border-radius: 5px;
+    font-size: 2em;
+    letter-spacing: 0.1em;
+    color: #4a90e2;
+    margin: 0 auto;
+    width: 50%;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
