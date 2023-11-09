@@ -1,22 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import axios from 'axios';
 
 function App() {
+  const [pingResponse, setPingResponse] = useState('');
+
+  const getPingResponse = () => {
+    axios.get('http://localhost:8080/health')
+      .then(response => {
+        setPingResponse(response.data.status);
+      })
+      .catch(error => {
+        console.error('There was an error!', error);
+      });
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Click the button to get the health of Go server.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <button onClick={getPingResponse}>
+          Ping Server
+        </button>
+        {pingResponse && <p>Response: {pingResponse}</p>}
       </header>
     </div>
   );
