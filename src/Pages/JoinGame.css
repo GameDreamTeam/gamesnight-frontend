@@ -1,51 +1,84 @@
+/* JoinGame.css */
+
 .join-game-container {
-    text-align: center;
-    padding: 50px;
-    background-color: #f0f0f0;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 50px auto;
-    width: 80%;
-    max-width: 600px;
-  }
-  
-  .join-game-container h1 {
-    color: #333;
-    font-size: 2.5em;
-    margin-bottom: 20px;
-  }
-  
-  .input-group {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-  
-  .input-group input {
-    padding: 10px;
-    font-size: 1em;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    flex-grow: 1;
-    max-width: 200px;
-  }
-  
-  .input-group button {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .input-group button:hover {
-    background-color: #45a049;
-  }
-  
-  .message {
-    color: #d44;
-    font-size: 1em;
-  }  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #e6f3ff; /* Lighter blue background for a softer look */
+  color: #333; /* Dark grey text for better readability */
+}
+
+h1 {
+  font-size: 2.2em;
+  margin-bottom: 20px;
+  color: #3498db; /* Slightly darker blue for heading */
+}
+
+.game-id-display {
+  margin-bottom: 20px;
+  font-size: 1.4em;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+input {
+  padding: 12px;
+  font-size: 1.1em;
+  border: 2px solid #ccc; /* Light grey border */
+  border-radius: 5px;
+  color: #555; /* Darker text color for input */
+  width: 70%; /* Controlled width */
+}
+
+input:focus {
+  border-color: #3498db; /* Blue border on focus */
+}
+
+button {
+  padding: 12px 25px;
+  font-size: 1.1em;
+  background-color: #3498db; /* Consistent blue button color */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #2980b9; /* Darker blue on hover */
+}
+
+.message {
+  margin-top: 20px;
+  font-size: 1.2em;
+  color: #e74c3c; /* Red color for error messages */
+}
+
+.alert {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  text-align: center;
+  width: 80%;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+  color: #155724;
+}
+
+.alert-error {
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  color: #721c24;
+}
