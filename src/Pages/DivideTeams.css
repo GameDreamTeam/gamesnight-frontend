@@ -1,0 +1,41 @@
+.divide-teams-wrapper {
+    padding: 2rem;
+    text-align: center;
+  }
+  
+  .title {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .teams-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+  
+  .team {
+    background-color: #f7f7f7;
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    width: 200px;
+  }
+  
+  .team-name {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  
+  .player-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .player {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  

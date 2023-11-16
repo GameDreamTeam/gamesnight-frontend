@@ -1,15 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './HomePage.css'; // Import the CSS file
+import './HomePage.css';
+
+const Button = ({ path, label, className }) => (
+  <Link to={path} className={`button ${className}`} aria-label={label}>
+    {label}
+  </Link>
+);
 
 const HomePage = () => (
   <div className="home-container">
-    <h1>Welcome to the Fishbowl Game!</h1>
+    <header>
+      <h1>Welcome to the Fishbowl Game!</h1>
+    </header>
     <p>Choose to join as a host or a player.</p>
-    <div className="buttons-container">
-      <Link to="/host" className="button host-button">Join as Host</Link>
-      <Link to="/join" className="button player-button">Join as Player</Link>
-    </div>
+    <nav className="buttons-container">
+      <Button path="/v0/create-game" label="Join as Host" className="host-button" />
+      <Button path="/v0/:gameId/join" label="Join as Player" className="player-button" />
+    </nav>
   </div>
 );
 
