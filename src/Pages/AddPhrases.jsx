@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './AddPhrases.css';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const AddPhrases = () => {
   const [phrases, setPhrases] = useState(new Array(4).fill(''));
   const [message, setMessage] = useState('');
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation();
-  const { gameId } = location.state || {};
+  const { gameId } = useParams();
 
   const handlePhraseChange = (index, value) => {
     const updatedPhrases = phrases.map((phrase, i) => 
@@ -35,7 +34,7 @@ const AddPhrases = () => {
 
       setMessage('Phrases submitted successfully.');
       setIsError(false);
-      navigate(`/v0/game/${gameId}/divide-teams`, { state: { gameId } });
+      navigate(`/game/${gameId}/divide-teams`, { state: { gameId } });
     } catch (error) {
       console.error('Error submitting phrases:', error);
       setMessage('Error submitting phrases. Please try again.');
@@ -49,7 +48,7 @@ const AddPhrases = () => {
         <h2 className="title">Submit Your Phrases</h2>
         <form className="phrases-form" onSubmit={submitPhrases}>
           {phrases.map((phrase, index) => (
-            <div key={index} className="input-wrapper">
+            <div key={index} className="phrase-input-group">
               <label htmlFor={`phrase-${index}`} className="input-label">
                 Phrase {index + 1}
               </label>
@@ -59,7 +58,7 @@ const AddPhrases = () => {
                 className="input-field"
                 value={phrase}
                 onChange={(e) => handlePhraseChange(index, e.target.value)}
-                placeholder=""
+                placeholder="Enter phrase here"
                 required
               />
             </div>
@@ -67,7 +66,7 @@ const AddPhrases = () => {
           <button type="submit" className="submit-button">Submit Phrases</button>
         </form>
         {message && (
-          <div className={`alert ${isError ? 'alert-error' : 'alert-success'}`}>
+          <div className={`message ${isError ? 'error' : 'success'}`}>
             {message}
           </div>
         )}
