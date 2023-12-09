@@ -17,7 +17,7 @@ const JoinGame = () => {
   useEffect(() => {
     const fetchPlayers = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/v0/gamemeta/${gameId}`, { withCredentials: true });
+        const response = await axios.get(`http://localhost:8080/v0/game/${gameId}/meta`, { withCredentials: true });
         if (response.data.status === 'success') {
           setPlayers(response.data.data.players);
         }
@@ -27,15 +27,15 @@ const JoinGame = () => {
     };
 
     fetchPlayers();
-    const intervalId = setInterval(fetchPlayers, 5000);
-
+    const intervalId = setInterval(fetchPlayers, 1000);
+  
     return () => clearInterval(intervalId);
   }, [gameId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`http://localhost:8080/v0/${gameId}/join`, { username }, { withCredentials: true });
+      await axios.post(`http://localhost:8080/v0/game/${gameId}/join`, { username }, { withCredentials: true });
       setMessage("Game Joined Successfully");
       setError('');
       setUsername('');

@@ -20,7 +20,7 @@ const HomePage = () => {
   const handleJoinAsPlayer = (e) => {
     e.preventDefault();
     if (playerGameId.length === 4) {
-      axios.get(`http://localhost:8080/v0/gamemeta/${playerGameId}`, { withCredentials: true })
+      axios.get(`http://localhost:8080/v0/game/${playerGameId}/meta`, { withCredentials: true })
         .then(response => {
           response.data.status === 'success'
             ? navigate(`/game/${playerGameId}/join`)
