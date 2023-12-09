@@ -1,84 +1,145 @@
-/* JoinGame.css */
+/* Base Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  line-height: 1.6;
+}
 
-.join-game-container {
+.game-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Header */
+.game-header {
+  background: #007bff;
+  color: #fff;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.game-header h1 {
+  margin: 0;
+}
+
+.game-header p {
+  margin-top: 5px;
+  font-style: italic;
+}
+
+/* Link Section */
+.share-link {
+  margin-top: 20px;
+  background: #ddd;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.link-container {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: #e6f3ff; /* Lighter blue background for a softer look */
-  color: #333; /* Dark grey text for better readability */
+  margin-top: 10px;
 }
 
-h1 {
-  font-size: 2.2em;
-  margin-bottom: 20px;
-  color: #3498db; /* Slightly darker blue for heading */
+.link-container input {
+  flex: 1;
+  padding: 8px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
-.game-id-display {
-  margin-bottom: 20px;
-  font-size: 1.4em;
+/* Form Styles */
+.join-form input {
+  padding: 8px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  width: 100%;
 }
 
-.input-group {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  align-items: center;
-}
-
-input {
-  padding: 12px;
-  font-size: 1.1em;
-  border: 2px solid #ccc; /* Light grey border */
-  border-radius: 5px;
-  color: #555; /* Darker text color for input */
-  width: 70%; /* Controlled width */
-}
-
-input:focus {
-  border-color: #3498db; /* Blue border on focus */
-}
-
-button {
-  padding: 12px 25px;
-  font-size: 1.1em;
-  background-color: #3498db; /* Consistent blue button color */
+.join-form button {
+  background: #28a745;
   color: #fff;
   border: none;
-  border-radius: 5px;
+  padding: 10px 15px;
+  border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s;
 }
 
-button:hover {
-  background-color: #2980b9; /* Darker blue on hover */
+.join-form button:hover {
+  background: #218838;
 }
 
+/* Message Styles */
 .message {
-  margin-top: 20px;
-  font-size: 1.2em;
-  color: #e74c3c; /* Red color for error messages */
-}
-
-.alert {
-  padding: 15px;
-  margin-bottom: 20px;
-  border: 1px solid transparent;
+  padding: 10px;
+  margin-top: 10px;
   border-radius: 4px;
   text-align: center;
-  width: 80%;
 }
 
-.alert-success {
-  background-color: #d4edda;
-  border-color: #c3e6cb;
-  color: #155724;
+.message.error {
+  background: #dc3545;
+  color: #fff;
 }
 
-.alert-error {
-  background-color: #f8d7da;
-  border-color: #f5c6cb;
-  color: #721c24;
+.message.success {
+  background: #28a745;
+  color: #fff;
+}
+
+/* Lobby Styles */
+.lobby {
+  margin-top: 20px;
+}
+
+.player-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.player-card {
+  background: #007bff;
+  color: #fff;
+  padding: 10px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+/* Admin Section */
+.admin-section {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.admin-section button {
+  background: #ffc107;
+  color: #333;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.admin-section button:hover {
+  background: #e0a800;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+  .link-container,
+  .player-list {
+    flex-direction: column;
+  }
+
+  .link-container input,
+  .player-list .player-card {
+    width: 100%;
+    margin-bottom: 10px;
+  }
 }

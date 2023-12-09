@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import './DivideTeams.css'; // Ensure this CSS file is correctly linked
 
 const DivideTeams = () => {
   const [teams, setTeams] = useState(null);
-  const location = useLocation();
-  const { gameId } = location.state || {};
+  const { gameId } = useParams();
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/v0/game/${gameId}/divide-teams`, { withCredentials: true })
+    axios.get(`http://localhost:8080/v0/game/${gameId}`, { withCredentials: true })
       .then(response => {
         setTeams(response.data.data.teams);
       })

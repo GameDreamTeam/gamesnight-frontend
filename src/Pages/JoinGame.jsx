@@ -1,77 +1,102 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './JoinGame.css'; // Import the updated CSS file
+import './JoinGame.css'; // Importing CSS file
 
 const JoinGame = () => {
-  const [gameId, setGameId] = useState('');
+  const { gameId } = useParams();
   const [username, setUsername] = useState('');
-  const [phrases, setPhrases] = useState(['', '', '', '']);
   const [message, setMessage] = useState('');
-  const [isError, setIsError] = useState(false);
-  const [stage, setStage] = useState(0);
+  const [error, setError] = useState('');
+  const [players, setPlayers] = useState([]);
+  const gameLink = `http://localhost:3000/game/${gameId}/join`;
+  const [isAdmin, setIsAdmin] = useState(true);
+  const navigate = useNavigate();
 
-  const joinGame = () => {
-    if (stage === 0) {
-      axios.post(`http://localhost:8080/v0/${gameId}/join`, { username }, { withCredentials: true })
-        .then(response => {
-          console.log(response);
-          setStage(1);
-          setMessage('Joined game successfully.');
-          setIsError(false);
-        })
-        .catch(error => {
-          setMessage('Failed to join game. ' + (error.response?.data.error || error.message));
-          setIsError(true);
-        });
-    } else {
-      if (phrases.some(phrase => !phrase.trim())) {
-        setMessage('Please enter all four phrases.');
-        setIsError(true);
-        return;
+
+  useEffect(() => {
+    const fetchPlayers = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/v0/gamemeta/${gameId}`, { withCredentials: true });
+        if (response.data.status === 'success') {
+          setPlayers(response.data.data.players);
+        }
+      } catch (error) {
+        console.error('Error fetching players:', error);
       }
+    };
 
-      axios.post(`http://localhost:8080/v0/game/${gameId}/submit`, { phraseList: phrases }, { withCredentials: true })
-        .then(response => {
-          setMessage('Phrases submitted successfully.');
-          setIsError(false);
-        })
-        .catch(error => {
-          setMessage('Failed to submit phrases. ' + (error.response?.data.error || error.message));
-          setIsError(true);
-        });
+    fetchPlayers();
+    const intervalId = setInterval(fetchPlayers, 5000);
+
+    return () => clearInterval(intervalId);
+  }, [gameId]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post(`http://localhost:8080/v0/${gameId}/join`, { username }, { withCredentials: true });
+      setMessage("Game Joined Successfully");
+      setError('');
+      setUsername('');
+    } catch (error) {
+      setMessage('');
+      setError("You have already joined the game");
     }
   };
 
+  const handleAdminSubmit = () => {
+    navigate(`/game/${gameId}/submit`); // Navigate to the submit page
+  };
+
   return (
-    <div className="join-game-container">
-      <h1>Join Game</h1>
-
-      {gameId && (
-        <div className="game-id-display">
-          <p>Game ID: {gameId}</p>
+    <div className="game-container">
+      <header className="game-header">
+        <h1>Welcome to Game: {gameId}</h1>
+        {username && <p>Logged in as: {username}</p>}
+      </header>
+      <section className="share-link">
+        <p>Share this link for others to join:</p>
+        <div className="link-container">
+          <input type="text" value={gameLink} readOnly />
+          <button onClick={() => navigator.clipboard.writeText(gameLink)}>
+            Copy Link
+          </button>
         </div>
+      </section>
+
+      <section className="join-game">
+        <form onSubmit={handleSubmit} className="join-form">
+          <input
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Enter your username"
+            required
+          />
+          <button type="submit">Join Game</button>
+        </form>
+        <div className={error ? "message error" : "message success"}>
+          {message || error}
+        </div>
+      </section>
+
+      <section className="lobby">
+        <h2>Lobby</h2>
+        <div className="player-list">
+          {players.map(player => (
+            <div className="player-card" key={player.id}>
+              {player.name}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {isAdmin && (
+        <section className="admin-section">
+          <button onClick={handleAdminSubmit}>Everyone's Here</button>
+        </section>
       )}
-
-      <div className="input-group">
-        {stage === 0 && (
-          <>
-            <input type="text" value={gameId} onChange={(e) => setGameId(e.target.value)} placeholder="Enter Game ID" />
-            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Enter Username" />
-          </>
-        )}
-
-        {stage === 1 && phrases.map((phrase, index) => (
-          <input key={index} type="text" value={phrase} onChange={(e) => {
-            const newPhrases = [...phrases];
-            newPhrases[index] = e.target.value;
-            setPhrases(newPhrases);
-          }} placeholder={`Phrase ${index + 1}`} />
-        ))}
-
-        <button onClick={joinGame}>{stage === 0 ? 'Join' : 'Submit Phrases'}</button>
-      </div>
-
-      {message && <div className={`alert ${isError ? 'alert-error' : 'alert-success'}`}>{message}</div>}
     </div>
   );
 };
