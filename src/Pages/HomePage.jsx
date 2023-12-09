@@ -10,7 +10,7 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://localhost:8080/v0/create-game', { withCredentials: true })
+    axios.get('http://localhost:8080/v0/game/create', { withCredentials: true })
       .then(response => setGameId(response.data.data.gameId))
       .catch(error => console.error('Error fetching game ID:', error));
   }, []);
