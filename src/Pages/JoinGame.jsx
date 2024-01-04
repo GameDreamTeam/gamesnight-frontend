@@ -5,19 +5,17 @@ import './JoinGame.css'; // Importing CSS file
 
 const JoinGame = () => {
   const { gameId } = useParams();
-  const [username, setUsername] = useState('');
+  const navigate = useNavigate();
+  const [name, setUsername] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [players, setPlayers] = useState([]);
   const gameLink = `http://localhost:3000/game/${gameId}/join`;
-  const [isAdmin, setIsAdmin] = useState(true);
-  const navigate = useNavigate();
-
 
   useEffect(() => {
     const fetchPlayers = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/v0/game/${gameId}/meta`, { withCredentials: true });
+        const response = await axios.get(`http://localhost:8080/v0/games/${gameId}/meta`, { withCredentials: true });
         if (response.data.status === 'success') {
           setPlayers(response.data.data.players);
         }
@@ -35,7 +33,7 @@ const JoinGame = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`http://localhost:8080/v0/game/${gameId}/join`, { username }, { withCredentials: true });
+      await axios.post(`http://localhost:8080/v0/games/${gameId}/join`, { name }, { withCredentials: true });
       setMessage("Game Joined Successfully");
       setError('');
       setUsername('');
@@ -45,15 +43,15 @@ const JoinGame = () => {
     }
   };
 
-  const handleAdminSubmit = () => {
-    navigate(`/game/${gameId}/submit`); // Navigate to the submit page
+  const handleSubmitWords = () => {
+    navigate(`/game/${gameId}/submit`);
   };
 
   return (
     <div className="game-container">
       <header className="game-header">
         <h1>Welcome to Game: {gameId}</h1>
-        {username && <p>Logged in as: {username}</p>}
+        {name && <p>Logged in as: {name}</p>}
       </header>
       <section className="share-link">
         <p>Share this link for others to join:</p>
@@ -69,7 +67,7 @@ const JoinGame = () => {
         <form onSubmit={handleSubmit} className="join-form">
           <input
             type="text"
-            value={username}
+            value={name}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="Enter your username"
             required
@@ -92,11 +90,9 @@ const JoinGame = () => {
         </div>
       </section>
 
-      {isAdmin && (
-        <section className="admin-section">
-          <button onClick={handleAdminSubmit}>Everyone's Here</button>
-        </section>
-      )}
+      <section className="submit-words">
+        <button onClick={handleSubmitWords}>Submit Words</button>
+      </section>
     </div>
   );
 };

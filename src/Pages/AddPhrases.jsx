@@ -28,7 +28,8 @@ const AddPhrases = () => {
 
     try {
       const formattedPhrases = phrases.map(phrase => ({ input: phrase }));
-      await axios.post(`http://localhost:8080/v0/game/${gameId}/submit`, 
+      console.log({ phraseList: formattedPhrases })
+      await axios.post(`http://localhost:8080/v0/games/${gameId}/phrases`, 
                        { phraseList: formattedPhrases }, 
                        { withCredentials: true });
 

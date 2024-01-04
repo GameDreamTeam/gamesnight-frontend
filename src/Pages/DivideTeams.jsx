@@ -8,7 +8,7 @@ const DivideTeams = () => {
   const { gameId } = useParams();
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/v0/game/${gameId}`, { withCredentials: true })
+    axios.get(`http://localhost:8080/v0/games/${gameId}`, { withCredentials: true })
       .then(response => {
         setTeams(response.data.data.teams);
       })
