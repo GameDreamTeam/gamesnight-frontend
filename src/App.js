@@ -7,10 +7,10 @@ import DivideTeams from './Pages/DivideTeams';
 const App = () => (
   <Router>
     <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/game/:gameId/join" element={<JoinGame />} />
-      <Route path="/game/:gameId/submit" element={<AddPhrases/>} />
-      <Route path="/game/:gameId/divide-teams" element={<DivideTeams/>} /> 
+      <Route path="/home" element={<HomePage />} />
+      <Route path="/games/:gameId" element={<JoinGame />} />
+      <Route path="/games/:gameId/submit" element={<AddPhrases/>} />
+      <Route path="/games/:gameId/divide-teams" element={<DivideTeams/>} /> 
     </Routes>
   </Router>
 );

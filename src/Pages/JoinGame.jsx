@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './JoinGame.css'; // Importing CSS file
+import './JoinGame.css';
 
 const JoinGame = () => {
   const { gameId } = useParams();
@@ -10,7 +10,12 @@ const JoinGame = () => {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [players, setPlayers] = useState([]);
-  const gameLink = `http://localhost:3000/game/${gameId}/join`;
+  const [showMessage, setShowMessage] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [adminId, setAdminId] = useState(null); 
+  const [currentPlayerId, setCurrentPlayerId] = useState(null);
+
+  const gameLink = `http://localhost:3000/games/${gameId}`;
 
   useEffect(() => {
     const fetchPlayers = async () => {
@@ -18,41 +23,85 @@ const JoinGame = () => {
         const response = await axios.get(`http://localhost:8080/v0/games/${gameId}/meta`, { withCredentials: true });
         if (response.data.status === 'success') {
           setPlayers(response.data.data.players);
+          setAdminId(response.data.data.adminId);
         }
       } catch (error) {
-        console.error('Error fetching players:', error);
+        console.error('Error Getting Game Data', error);
+        navigate("/home");
       }
     };
 
     fetchPlayers();
     const intervalId = setInterval(fetchPlayers, 1000);
-  
+
     return () => clearInterval(intervalId);
-  }, [gameId]);
+  }, [gameId, navigate]);
+
+  useEffect(() => {
+    const checkGameState = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/v0/games/${gameId}/details`, { withCredentials: true });
+        console.log(response)
+        if (response.data.status === 'success' && response.data.data.state === 1) {
+          navigate(`/games/${gameId}/submit`);
+        }
+      } catch (error) {
+        console.error('Error checking game state', error);
+      }
+    };
+
+    checkGameState();
+    const intervalId = setInterval(checkGameState, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [gameId, navigate]);
+
+  const fetchPlayerData = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/v0/players/`, { withCredentials: true });
+      if (response.data.status === 'success') {
+        setCurrentPlayerId(response.data.data.id);
+      }
+    } catch (error) {
+      console.error('Error Getting Player Data', error);
+    }
+  };
+  fetchPlayerData();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await axios.post(`http://localhost:8080/v0/games/${gameId}/join`, { name }, { withCredentials: true });
       setMessage("Game Joined Successfully");
-      setError('');
-      setUsername('');
-    } catch (error) {
-      setMessage('');
+      setShowMessage(true);
+
+      setTimeout(() => {
+        setShowMessage(false);
+        setMessage('')
+      }, 1500);
+    } 
+    catch (error) {
       setError("You have already joined the game");
+      setShowError(true);
+
+      setTimeout(() => {
+        setShowError(false);
+        setError('');
+      }, 1500);
     }
   };
 
   const handleSubmitWords = () => {
-    navigate(`/game/${gameId}/submit`);
+    axios.post(`http://localhost:8080/v0/games/${gameId}/changeState`, null, { withCredentials: true })
+    navigate(`/games/${gameId}/submit`);
   };
 
   return (
     <div className="game-container">
       <header className="game-header">
         <h1>Welcome to Game: {gameId}</h1>
-        {name && <p>Logged in as: {name}</p>}
       </header>
+
       <section className="share-link">
         <p>Share this link for others to join:</p>
         <div className="link-container">
@@ -74,15 +123,19 @@ const JoinGame = () => {
           />
           <button type="submit">Join Game</button>
         </form>
-        <div className={error ? "message error" : "message success"}>
-          {message || error}
+
+        <div className={showMessage ? "message success" : "hidden"}>
+          {message}
+        </div>
+        <div className={showError ? "message error" : "hidden"}>
+          {error}
         </div>
       </section>
 
       <section className="lobby">
         <h2>Lobby</h2>
         <div className="player-list">
-          {players.map(player => (
+          {players.map((player) => (
             <div className="player-card" key={player.id}>
               {player.name}
             </div>
@@ -91,7 +144,9 @@ const JoinGame = () => {
       </section>
 
       <section className="submit-words">
-        <button onClick={handleSubmitWords}>Submit Words</button>
+      {currentPlayerId === adminId && (
+          <button onClick={handleSubmitWords}>Submit Words</button>
+        )}
       </section>
     </div>
   );
