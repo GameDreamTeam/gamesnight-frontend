@@ -132,3 +132,93 @@ body {
     width: 100%;
   }
 }
+
+/* Lobby Styles */
+.lobby {
+  margin-top: 20px;
+}
+
+.player-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.player-card {
+  position: relative;
+  background: #007bff;
+  color: #fff;
+  padding: 10px;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.delete-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  background: #c82333;
+}
+
+/* Share Link Section */
+.share-link {
+  margin-top: 20px;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.share-link p {
+  margin: 0 0 10px;
+  font-size: 16px;
+}
+
+.link-container {
+  display: flex;
+  align-items: center;
+}
+
+.link-container input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.link-container button {
+  background: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  margin-left: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.link-container button:hover {
+  background: #0056b3;
+}
+
+/* Copied to Clipboard Message */
+.copied-message {
+  color: #28a745;
+  margin-top: 5px;
+  font-size: 14px;
+  display: none;
+}
+
+.link-container.copied .copied-message {
+  display: block;
+}

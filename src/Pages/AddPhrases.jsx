@@ -21,23 +21,31 @@ const AddPhrases = () => {
     event.preventDefault();
 
     if (phrases.some(phrase => !phrase.trim())) {
-      setMessage('Please fill in all phrases.');
-      setIsError(true);
+      setTimeout(()=>{
+        setMessage('Please fill in all phrases.');
+        setIsError(true);
+      },2000)
+      
       return;
     }
 
     try {
       const formattedPhrases = phrases.map(phrase => ({ input: phrase }));
-      console.log({ phraseList: formattedPhrases })
       await axios.post(`http://localhost:8080/v0/games/${gameId}/phrases`, 
                        { phraseList: formattedPhrases }, 
                        { withCredentials: true });
 
-      setMessage('Phrases submitted successfully.');
-      setIsError(false);
-      navigate(`/game/${gameId}/divide-teams`, { state: { gameId } });
-    } catch (error) {
-      console.error('Error submitting phrases:', error);
+      setTimeout(()=>{
+        setMessage('Phrases submitted successfully.');
+        setIsError(false);
+      },2000)
+      
+      navigate(`/games/${gameId}/divide-teams`);
+    } 
+    catch (error) {
+      setTimeout(() => {
+        setMessage('Internal error for taking phrases')
+      }, 1500)
       setMessage('Error submitting phrases. Please try again.');
       setIsError(true);
     }

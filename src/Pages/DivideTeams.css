@@ -1,41 +1,80 @@
-.divide-teams-wrapper {
-    padding: 2rem;
-    text-align: center;
-  }
-  
-  .title {
-    font-size: 2rem;
-    margin-bottom: 1.5rem;
-  }
-  
-  .teams-container {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 2rem;
-  }
-  
-  .team {
-    background-color: #f7f7f7;
-    border-radius: 10px;
-    padding: 1rem;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    width: 200px;
-  }
-  
-  .team-name {
-    font-size: 1.2rem;
-    color: #333;
-    margin-bottom: 1rem;
-  }
-  
-  .player-list {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .player {
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
-  }
-  
+/* DivideTeams.css */
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f2f2f2;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+.team-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.team-card {
+  width: 48%;
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.team-card h2 {
+  color: #007bff;
+}
+
+.team-score {
+  margin-top: 10px;
+  color: #28a745;
+}
+
+.team-players {
+  margin-top: 10px;
+}
+
+.team-players ul {
+  list-style: none;
+  padding: 0;
+}
+
+.team-players li {
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.submit-words {
+  text-align: center;
+  margin-top: 20px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
