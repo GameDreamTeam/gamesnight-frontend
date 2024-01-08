@@ -4,49 +4,41 @@ import './AddPhrases.css';
 import { useParams, useNavigate } from 'react-router-dom';
 
 const AddPhrases = () => {
-  const [phrases, setPhrases] = useState(new Array(4).fill(''));
+  const [phrases, setPhrases] = useState(Array.from({ length: 4 }, () => ''));
   const [message, setMessage] = useState('');
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
   const { gameId } = useParams();
 
   const handlePhraseChange = (index, value) => {
-    const updatedPhrases = phrases.map((phrase, i) => 
-      i === index ? value : phrase
-    );
+    const updatedPhrases = phrases.map((phrase, i) => (i === index ? value : phrase));
     setPhrases(updatedPhrases);
   };
 
-  const submitPhrases = async (event) => {
+  const submitPhrases = (event) => {
     event.preventDefault();
 
-    if (phrases.some(phrase => !phrase.trim())) {
-      setTimeout(()=>{
-        setMessage('Please fill in all phrases.');
-        setIsError(true);
-      },2000)
-      
+    if (phrases.some((phrase) => !phrase.trim())) {
+      setMessage('Please fill in all phrases.');
+      setIsError(true);
       return;
     }
 
     try {
-      const formattedPhrases = phrases.map(phrase => ({ input: phrase }));
-      await axios.post(`http://localhost:8080/v0/games/${gameId}/phrases`, 
-                       { phraseList: formattedPhrases }, 
-                       { withCredentials: true });
+      const formattedPhrases = phrases.map((phrase) => ({ input: phrase }));
+      axios.post(
+        `http://localhost:8080/v0/games/${gameId}/phrases`,
+        { phraseList: formattedPhrases },
+        { withCredentials: true }
+      );
 
-      setTimeout(()=>{
-        setMessage('Phrases submitted successfully.');
-        setIsError(false);
-      },2000)
-      
-      navigate(`/games/${gameId}/divide-teams`);
-    } 
-    catch (error) {
+      setMessage('Phrases submitted successfully.');
+      setIsError(false);
       setTimeout(() => {
-        setMessage('Internal error for taking phrases')
-      }, 1500)
-      setMessage('Error submitting phrases. Please try again.');
+        navigate(`/games/${gameId}/divide-teams`);
+      }, 3000);
+    } catch (error) {
+      setMessage(error.response.data.error);
       setIsError(true);
     }
   };

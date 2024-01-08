@@ -1,80 +1,82 @@
-/* DivideTeams.css */
-
 body {
   font-family: 'Arial', sans-serif;
-  background-color: #f2f2f2;
+  background-color: #f4f4f4;
   margin: 0;
   padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
 
 .container {
-  max-width: 800px;
-  margin: 20px auto;
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.lobby,
+.not-submitted,
+.teams-division {
   background-color: #fff;
-  border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  margin-bottom: 20px;
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-h1 {
-  text-align: center;
-  color: #333;
-}
-
-.team-container {
+.player-list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  gap: 10px;
+  justify-content: center;
 }
 
-.team-card {
-  width: 48%;
-  margin-bottom: 20px;
-  padding: 15px;
-  background-color: #fff;
-  border: 1px solid #ddd;
+.player-card {
+  background-color: #e0e0e0;
+  padding: 10px;
   border-radius: 8px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-}
-
-.team-card h2 {
-  color: #007bff;
-}
-
-.team-score {
-  margin-top: 10px;
-  color: #28a745;
-}
-
-.team-players {
-  margin-top: 10px;
-}
-
-.team-players ul {
-  list-style: none;
-  padding: 0;
-}
-
-.team-players li {
-  margin-bottom: 5px;
-  color: #333;
-}
-
-.submit-words {
-  text-align: center;
-  margin-top: 20px;
-}
-
-button {
-  padding: 10px 20px;
-  font-size: 16px;
-  color: #fff;
-  background-color: #007bff;
-  border: none;
-  border-radius: 5px;
   cursor: pointer;
 }
 
+.player-card:hover {
+  background-color: #d0d0d0;
+}
+
+.not-submitted {
+  text-align: center;
+}
+
+.teams-division {
+  text-align: center;
+}
+
+.team {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+button {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
 button:hover {
-  background-color: #0056b3;
+  background-color: #2078af;
+}
+
+@media (max-width: 768px) {
+  .player-list {
+    flex-direction: column;
+  }
 }

@@ -18,6 +18,30 @@ const JoinGame = () => {
 
   const gameLink = `http://localhost:3000/games/${gameId}`
 
+  const handleJoinGame = async (e) => {
+    e.preventDefault()
+    try {
+      const response = await axios.post(`http://localhost:8080/v0/games/${gameId}/join`, { name }, { withCredentials: true })
+      setMessage("Game Joined Successfully")
+      setPlayers(response.data.data.players)
+      setShowMessage(true)
+
+      setTimeout(() => {
+        setShowMessage(false)
+        setMessage('')
+      }, 1500)
+    } 
+    catch (error) {
+      setError("You have already joined the game")
+      setShowError(true)
+
+      setTimeout(() => {
+        setShowError(false)
+        setError('')
+      }, 1500)
+    }
+  }
+
   useEffect(() => {
     const fetchLobbyPlayers = async () => {
       try {
@@ -34,7 +58,7 @@ const JoinGame = () => {
     }
 
     fetchLobbyPlayers()
-  }, []) 
+  },[]) 
 
   useEffect(() => {
     const fetchPlayerId = async () => {
@@ -49,7 +73,7 @@ const JoinGame = () => {
     };
 
     fetchPlayerId()
-  }, []) 
+  },[]) 
 
   const handleDeletePlayer = async (playerId) => {
     const isConfirmed = window.confirm("Are you sure you want to delete this player?")
@@ -61,6 +85,14 @@ const JoinGame = () => {
   const deletePlayer = async (playerId) => {
     try {
       await axios.delete(`http://localhost:8080/v0/games/${gameId}/players/${playerId}`, { withCredentials: true })
+      setMessage("Player removed Successfully")
+      setShowMessage(true)
+
+      setTimeout(() => {
+        setShowMessage(false)
+        setMessage('')
+      }, 1500)
+
     } catch (error) {
       setError("Host cannot be removed")
       setShowError(true)
@@ -105,31 +137,7 @@ const JoinGame = () => {
     }
 
     checkGameState()
-  }, [])
-
-  const handleJoinGame = async (e) => {
-    e.preventDefault()
-    try {
-      const response = await axios.post(`http://localhost:8080/v0/games/${gameId}/join`, { name }, { withCredentials: true })
-      setMessage("Game Joined Successfully")
-      setPlayers(response.data.data.players)
-      setShowMessage(true)
-
-      setTimeout(() => {
-        setShowMessage(false)
-        setMessage('')
-      }, 1500)
-    } 
-    catch (error) {
-      setError("You have already joined the game")
-      setShowError(true)
-
-      setTimeout(() => {
-        setShowError(false)
-        setError('')
-      }, 1500)
-    }
-  }
+  })
 
   return (
     <div className="game-container">
@@ -146,7 +154,7 @@ const JoinGame = () => {
             onClick={() => {
               navigator.clipboard.writeText(gameLink)
               setCopied(true)
-              setTimeout(() => setCopied(false), 2000)
+              setTimeout(() => setCopied(false), 1000)
             }}
           >
             Copy Link
