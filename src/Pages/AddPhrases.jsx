@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './AddPhrases.css';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -9,39 +9,60 @@ const AddPhrases = () => {
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
   const { gameId } = useParams();
+  const [submitted, setSubmitted] = useState(false);
+
 
   const handlePhraseChange = (index, value) => {
     const updatedPhrases = phrases.map((phrase, i) => (i === index ? value : phrase));
     setPhrases(updatedPhrases);
   };
 
-  const submitPhrases = (event) => {
+  const submitPhrases = async (event) => {
     event.preventDefault();
-
     if (phrases.some((phrase) => !phrase.trim())) {
       setMessage('Please fill in all phrases.');
       setIsError(true);
       return;
     }
-
+  
     try {
       const formattedPhrases = phrases.map((phrase) => ({ input: phrase }));
-      axios.post(
+      await axios.post(
         `http://localhost:8080/v0/games/${gameId}/phrases`,
         { phraseList: formattedPhrases },
         { withCredentials: true }
       );
-
+  
       setMessage('Phrases submitted successfully.');
       setIsError(false);
-      setTimeout(() => {
-        navigate(`/games/${gameId}/divide-teams`);
-      }, 3000);
+      // Optionally navigate or set a state to indicate completion
     } catch (error) {
-      setMessage(error.response.data.error);
+      setMessage(error.response?.data.error || 'An error occurred');
       setIsError(true);
     }
-  };
+  };  
+
+  useEffect(() => {
+    const fetchPlayer = async () => {
+      if (submitted) {
+        return; // Stop polling if phrases are submitted
+      }
+      try {
+        const response = await axios.get(`http://localhost:8080/v0/players/`, { withCredentials: true });
+        if (response.data.status === 'success' && response.data.data.wordsSubmitted === true) {
+          navigate(`/games/${gameId}/divide-teams`);
+        }
+      } catch (error) {
+        console.error('Error Getting Player Data', error);
+      }
+      setTimeout(() => {
+        fetchPlayer();
+      }, 3000);
+    };
+  
+    fetchPlayer();
+  }, [submitted]); 
+  
 
   return (
     <div className="add-phrases-wrapper">

@@ -1,82 +1,115 @@
-body {
+/* General Styles */
+/* body {
   font-family: 'Arial', sans-serif;
   background-color: #f4f4f4;
+  color: #333;
   margin: 0;
   padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-}
+} */
 
-.container {
+/* Container Styles */
+.DivideTeams-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
-  width: 100%;
-  box-sizing: border-box;
 }
 
-.lobby,
-.not-submitted,
-.teams-division {
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+/* Section Styles */
+section {
   margin-bottom: 20px;
-  padding: 20px;
-  width: 100%;
-  box-sizing: border-box;
 }
 
-.player-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  justify-content: center;
+/* Header Styles */
+h1, h2, h3 {
+  color: #0d47a1;
 }
 
-.player-card {
-  background-color: #e0e0e0;
+h1 {
+  font-size: 2.5em;
+  text-align: center;
+  margin-bottom: 0.5em;
+}
+
+h2 {
+  font-size: 2em;
+  margin-bottom: 0.25em;
+}
+
+h3 {
+  font-size: 1.5em;
+  margin-bottom: 0.25em;
+}
+
+/* Player List Styles */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  background-color: #e3f2fd;
   padding: 10px;
-  border-radius: 8px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
 }
 
-.player-card:hover {
-  background-color: #d0d0d0;
-}
-
-.not-submitted {
-  text-align: center;
-}
-
-.teams-division {
-  text-align: center;
-}
-
-.team {
-  margin-bottom: 20px;
-  text-align: center;
-}
-
+/* Button Styles */
 button {
-  background-color: #3498db;
-  color: #fff;
+  background-color: #4caf50;
+  color: white;
   border: none;
   padding: 10px 20px;
-  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
   cursor: pointer;
+  border-radius: 12px;
   transition: background-color 0.3s;
 }
 
 button:hover {
-  background-color: #2078af;
+  background-color: #45a049;
 }
 
-@media (max-width: 768px) {
-  .player-list {
-    flex-direction: column;
-  }
+/* Messages Styles */
+.error-message, .success-message {
+  text-align: center;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.error {
+  background-color: #ffcccb;
+  color: #d8000c;
+}
+
+.success {
+  background-color: #ddffcc;
+  color: #4bb543;
+}
+
+/* Team and Player Section Styles */
+.not-submitted, .submit-words, .start-game {
+  background-color: #e1bee7;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
+}
+
+.team {
+  background-color: #fff8e1;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+
+/* Grid Layout for Teams */
+.teams-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 20px;
 }
