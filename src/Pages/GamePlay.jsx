@@ -28,6 +28,7 @@ const GamePlay = () => {
 
     fetchPlayerId()
   },[]) 
+  
 
   useEffect(() => {
     const fetchGameDetails = async () => {

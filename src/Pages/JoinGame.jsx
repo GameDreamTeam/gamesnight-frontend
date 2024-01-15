@@ -32,7 +32,7 @@ const JoinGame = () => {
       }, 1500)
     } 
     catch (error) {
-      setError("You have already joined the game")
+      setError("You have already joined the game  ")
       setShowError(true)
 
       setTimeout(() => {

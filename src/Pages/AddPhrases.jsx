@@ -50,6 +50,7 @@ const AddPhrases = () => {
       try {
         const response = await axios.get(`http://localhost:8080/v0/players/`, { withCredentials: true });
         if (response.data.status === 'success' && response.data.data.wordsSubmitted === true) {
+          setSubmitted(true);
           navigate(`/games/${gameId}/divide-teams`);
         }
       } catch (error) {
