@@ -82,7 +82,7 @@ button:hover {
 }
 
 .error {
-  background-color: #ffcccb;
+  /* background-color: #ffcccb; */
   color: #d8000c;
 }
 
@@ -93,7 +93,7 @@ button:hover {
 
 /* Team and Player Section Styles */
 .not-submitted, .submit-words, .start-game {
-  background-color: #e1bee7;
+  /* background-color: #e1bee7; */
   padding: 15px;
   border-radius: 10px;
   box-shadow: 0px 4px 6px rgba(0,0,0,0.1);

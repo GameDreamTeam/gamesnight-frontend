@@ -32,7 +32,7 @@ const JoinGame = () => {
       }, 1500)
     } 
     catch (error) {
-      setError("You have already joined the game  ")
+      setError("You have already joined the game")
       setShowError(true)
 
       setTimeout(() => {
@@ -51,7 +51,7 @@ const JoinGame = () => {
           setAdminId(response.data.data.adminId)
         }
       } catch (error) {
-        console.error('Error Getting Game Data', error)
+        navigate("/home")
       }
       setTimeout(fetchLobbyPlayers, 4000);
 
@@ -140,26 +140,25 @@ const JoinGame = () => {
   })
 
   return (
+    <>
     <div className="game-container">
       
       <header className="game-header">
-        <h1>Welcome to Game: {gameId}</h1>
+        <h1>Welcome to the Game: {gameId}</h1>
       </header>
 
       <section className="share-link">
         <p>Share this link for others to join:</p>
         <div className={`link-container ${copied ? 'copied' : ''}`}>
           <input type="text" value={gameLink} readOnly />
-          <button
-            onClick={() => {
-              navigator.clipboard.writeText(gameLink)
-              setCopied(true)
-              setTimeout(() => setCopied(false), 1000)
-            }}
-          >
+          <button onClick={() => {
+              navigator.clipboard.writeText(gameLink);
+              setCopied(true);
+              setTimeout(() => setCopied(false), 1000);
+            }}>
             Copy Link
           </button>
-          <div className="copied-message">Copied to Clipboard</div>
+          {copied && <div className="copied-message">Copied to Clipboard</div>}
         </div>
       </section>
 
@@ -172,15 +171,10 @@ const JoinGame = () => {
             placeholder="Enter your username"
             required
           />
-          <button type="submit">Join Game</button>
+          <button type="submit" class="join-game-button">Join Game</button>
         </form>
-
-        <div className={showMessage ? "message success" : "hidden"}>
-          {message}
-        </div>
-        <div className={showError ? "message error" : "hidden"}>
-          {error}
-        </div>
+        {showMessage && <div className="message success">{message}</div>}
+        {showError && <div className="message error">{error}</div>}
       </section>
 
       <section className="lobby">
@@ -190,21 +184,26 @@ const JoinGame = () => {
             <div className="player-card" key={player.id}>
               <span>{player.name}</span>
               {currentPlayerId === adminId && (
-                <button className="delete-button" onClick={() => handleDeletePlayer(player.id)}>
-                  &#x2715; 
+                <button
+                  className="delete-button"
+                  onClick={() => handleDeletePlayer(player.id)}
+                >
+                  &#x2715;
                 </button>
               )}
             </div>
           ))}
         </div>
       </section>
-
-      <section className="submit-words">
-      {currentPlayerId === adminId && (
-          <button onClick={handleGoToAddPhrases}>Everyone's Here</button>
-        )}
-      </section>
     </div>
+    <div class="submit-word">
+      {currentPlayerId === adminId && (
+        <section className="submit-words">
+          <button onClick={handleGoToAddPhrases} class="next-button">Everyone's Here</button>
+        </section>
+      )}
+    </div>
+    </>
   )
 }
 
