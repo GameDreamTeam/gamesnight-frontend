@@ -16,72 +16,79 @@ const DivideTeams = () => {
   useEffect(() => {
     const fetchPlayerId = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/v0/players/`, { withCredentials: true });
+        const response = await axios.get(`http://localhost:8080/v0/players/`, { withCredentials: true })
         if (response.data.status === 'success') {
-          setCurrentPlayerId(response.data.data.id);
+          setCurrentPlayerId(response.data.data.id)
         }
       } catch (error) {
-        console.error('Error Getting Player Data', error);
+        console.error('Error Getting Player Data', error)
       }
-    };
-    fetchPlayerId();
-  }, []);
+    }
+    fetchPlayerId()
+  }, [])
 
   useEffect(() => {
     const fetchAdmin = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/v0/games/${gameId}/meta`, { withCredentials: true });
+        const response = await axios.get(`http://localhost:8080/v0/games/${gameId}/meta`, { withCredentials: true })
         if (response.data.status === 'success') {
-          setAdminId(response.data.data.adminId);
+          setAdminId(response.data.data.adminId)
         }
       } catch (error) {
-        console.error('Error Getting Admin Data', error);
+        console.error('Error Getting Admin Data', error)
       }
-    };
-    fetchAdmin();
-  }, []);
+    }
+    fetchAdmin()
+  }, [])
 
   useEffect(() => {
-    let isMounted = true;
-
     const fetchPlayers = async () => {
-      if (!isMounted) return;
       try {
         const response = await axios.get(`http://localhost:8080/v0/games/${gameId}/meta`, { withCredentials: true });
         if (response.data.status === 'success') {
-          const allPlayers = response.data.data.players;
-          const playersWithWords = allPlayers.filter((player) => player.wordsSubmitted === false);
+          const allPlayers = response.data.data.players
+          const playersWithWords = allPlayers.filter((player) => player.wordsSubmitted === false)
           setPlayers(playersWithWords);
         }
       } catch (error) {
         console.error('Error Getting Teams and Players Data', error);
       }
-      setTimeout(fetchPlayers, 3000);
-    };
+      setTimeout(fetchPlayers, 3000)
+    }
 
-    fetchPlayers();
-    return () => { isMounted = false };
-  }, [gameId]);
+    fetchPlayers()
+  }, [])
 
   useEffect(() => {
-    let isMounted = true;
-
     const fetchTeams = async () => {
-      if (!isMounted) return;
       try {
         const response = await axios.get(`http://localhost:8080/v0/games/${gameId}/details`, { withCredentials: true });
         if (response.data.status === 'success') {
-          setTeams(response.data.data.teams);
+          setTeams(response.data.data.teams)
         }
       } catch (error) {
         console.error('Error Getting Teams and Players Data', error);
       }
       setTimeout(fetchTeams, 3000);
-    };
+    }
+    fetchTeams()
+  }, [])
 
-    fetchTeams();
-    return () => { isMounted = false };
-  }, [gameId]);
+  useEffect(() => {
+    const checkGameState = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/v0/games/${gameId}/details`, { withCredentials: true });
+        if (response.data.status === 'success' && response.data.data.state === 3) {
+          navigate(`/games/${gameId}/playing`);
+        }
+      } catch (error) {
+        console.error('Error checking game state', error);
+      }
+      setTimeout(checkGameState, 4000);
+    }
+
+    checkGameState()
+  }, [])
 
   const handleCreateTeams = async () => {
     try {
@@ -95,27 +102,7 @@ const DivideTeams = () => {
       setErrorMessage('Error creating teams. Please try again.');
       setTimeout(() => setErrorMessage(null), 2000);
     }
-  };
-
-  useEffect(() => {
-    let isMounted = true;
-
-    const checkGameState = async () => {
-      if (!isMounted) return;
-      try {
-        const response = await axios.get(`http://localhost:8080/v0/games/${gameId}/details`, { withCredentials: true });
-        if (response.data.status === 'success' && response.data.data.state === 3) {
-          navigate(`/games/${gameId}/playing`);
-        }
-      } catch (error) {
-        console.error('Error checking game state', error);
-      }
-      setTimeout(checkGameState, 4000);
-    };
-
-    checkGameState();
-    return () => { isMounted = false };
-  }, [gameId, navigate]);
+  }
 
   const handleStartGame = async () => {
     try {
@@ -125,7 +112,6 @@ const DivideTeams = () => {
         setTimeout(() => setSuccessMessage(null), 2000);
       }
     } catch (error) {
-      console.error('Error starting the game:', error);
       setErrorMessage('Error starting the game. Please try again.');
       setTimeout(() => setErrorMessage(null), 2000);
     }
@@ -133,61 +119,69 @@ const DivideTeams = () => {
 
   return (
     <div>
-      <section className="not-submitted">
-        <h2>Players Not Submitted Phrases</h2>
-        {players.length > 0 ? (
-          <ul>
-            {players.map((player) => (
-              <li key={player.id}>{player.name}</li>
-            ))}
-          </ul>
-        ) : (
-          <p>All players have submitted phrases.</p>
-        )}
-      </section>
-
-      <h1>Teams Division</h1>
-      {teams && teams.length > 0 ? (
-        teams.map((team, index) => (
-          <div key={index}>
-            <h2>Team {team.name}</h2>
-            <p>Score: {team.score}</p>
-
-            <h3>Players:</h3>
+      <div className="showPlayers">
+        <section className="not-submitted">
+          <h2>Players Not Submitted Phrases</h2>
+          {players.length > 0 ? (
             <ul>
-              {team.players.map((player) => (
-                <li key={player.id}>
-                  {player.name}
-                </li>
+              {players.map((player) => (
+                <li key={player.id}>{player.name}</li>
               ))}
             </ul>
-          </div>
-        ))
-      ) : (
-        <p>Teams yet to be made. </p>
-      )}
+          ) : (
+            <p>All players have submitted phrases.</p>
+          )}
+        </section>
+      </div>
+      <div className="messages">
+        <section className="error-message">
+          {errorMessage && <p className="error">{errorMessage}</p>}
+        </section>
 
-      <section className="error-message">
-        {errorMessage && <p className="error">{errorMessage}</p>}
-      </section>
+        <section className="success-message">
+          {successMessage && <p className="success">{successMessage}</p>}
+        </section>
+      </div>
 
-      <section className="success-message">
-        {successMessage && <p className="success">{successMessage}</p>}
-      </section>
+      <div className="showTeams">
+        <h1>Teams Division</h1>
+        {teams && teams.length > 0 ? (
+          teams.map((team, index) => (
+            <div key={index}>
+              <h2>Team {team.name}</h2>
+              <p>Score: {team.score}</p>
 
-      <section className="submit-words">
-        {currentPlayerId === adminId && (
-          <button onClick={handleCreateTeams}>Create Teams</button>
+              <h3>Players:</h3>
+              <ul>
+                {team.players.map((player) => (
+                  <li key={player.id}>{player.name}</li>
+                ))}
+              </ul>
+            </div>
+          ))
+        ) : (
+          <p>Waiting for the Host to Make Teams</p>
         )}
-      </section>
+      </div>
 
-      <section className="start-game">
-        {currentPlayerId === adminId && (
-          <button onClick={handleStartGame}>Start Game</button>
-        )}
-      </section>
+      <div className="createTeams">
+        <section className="submit-words">
+          {currentPlayerId === adminId && (
+            <button onClick={handleCreateTeams}>Create Teams</button>
+          )}
+        </section>
+      </div>
+
+      <div className="startGame">
+        <section className="start-game">
+          {currentPlayerId === adminId && (
+            <button onClick={handleStartGame}>Start Game</button>
+          )}
+        </section>
+      </div>
+
     </div>
-  );
-};
+  )
+}
 
 export default DivideTeams;

@@ -1,100 +1,108 @@
-/* .add-phrases-wrapper {
+/* Wrapper for the Add Phrases Section */
+.add-phrases-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background-color: #f4f7f6;
-  font-family: 'Arial', sans-serif;
+  padding: 20px;
 }
 
+/* Container for the Form */
 .container {
   width: 100%;
-  max-width: 600px;
-  padding: 2rem;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  max-width: 500px; /* Maximum width for larger screens */
+  margin: auto;
+  padding: 20px;
+  background-color: #f0f0f0; /* Light background */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Box shadow for 3D effect */
+  border-radius: 8px;
 }
 
+/* Title Style */
 .title {
   text-align: center;
-  color: #333;
-  font-size: 1.5rem;
-  margin-bottom: 2rem;
+  font-size: 24px;
+  margin-bottom: 20px;
 }
 
+/* Form Style */
 .phrases-form {
-  display: grid;
-  grid-gap: 1rem;
-}
-
-.phrase-input-group {
   display: flex;
   flex-direction: column;
 }
 
+/* Phrase Input Group */
+.phrase-input-group {
+  margin-bottom: 15px;
+}
+
+/* Input Label */
 .input-label {
-  margin-bottom: 0.5rem;
-  color: #555;
-  font-size: 1.1rem;
+  display: block;
+  margin-bottom: 5px;
 }
 
+/* Input Field */
 .input-field {
-  padding: 0.75rem;
+  width: 100%;
+  padding: 10px;
+  border-radius: 4px;
   border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 1rem;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); /* Inset shadow for 3D effect */
 }
 
-.input-field:focus {
-  outline: none;
-  border-color: #3498db;
-}
-
+/* Submit Button */
 .submit-button {
-  padding: 1rem;
-  background-color: #3498db;
+  background-color: #007bff;
   color: white;
+  padding: 10px 20px;
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 1rem;
-  margin-top: 1rem;
-  transition: background-color 0.2s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Shadow for 3D effect */
+  transition: background-color 0.3s ease;
 }
 
 .submit-button:hover {
-  background-color: #2980b9;
+  background-color: #0056b3;
 }
 
-.message {
-  padding: 1rem;
-  margin-top: 1rem;
-  text-align: center;
-  border-radius: 5px;
-  font-size: 1rem;
-}
-
-.success {
-  background-color: #2ecc71;
-  color: white;
-}
-
-.error {
-  background-color: #e74c3c;
-  color: white;
-}
-
-@media (max-width: 768px) {
+/* Responsive adjustments */
+@media (max-width: 600px) {
   .container {
-    padding: 1rem;
+    width: 90%; /* Adjust width for smaller screens */
   }
+}
 
-  .title {
-    font-size: 1.2rem;
-  }
+/* Base style for message */
+.submit-message {
+  padding: 10px;
+  margin: 20px auto; /* Centered horizontally */
+  max-width: 500px; /* Maximum width, adjust as needed */
+  border-radius: 4px;
+  text-align: center;
+  color: white; /* White text for better contrast */
+  font-size: 16px; /* Adjust the font size as necessary */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Deeper shadow for a stronger 3D effect */
+  border: 1px solid transparent; /* Optional: adds depth to the 3D effect */
+  background-clip: padding-box; /* For border effect */
+  transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s; /* Smooth transitions */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .input-label, .submit-button {
-    font-size: 0.9rem;
-  }
-} */
+.submit-message.error {
+  background-color: #EF4040; /* Red background for error messages */
+  transform: translateY(-2px); /* Slight raise effect */
+}
+
+.submit-message.success {
+  background-color: #28a745; /* Green background for success messages */
+  transform: translateY(-2px); /* Slight raise effect */
+}
+
+.submit-message:hover {
+  transform: translateY(-1px); /* Slight hover effect for more interactivity */
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.4); /* Increased shadow on hover */
+}
+

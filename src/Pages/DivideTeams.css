@@ -1,99 +1,179 @@
-.DivideTeams-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+/* Style for the Show Players Section */
+.showPlayers {
+  margin: 20px;
+  padding: 10px;
+  background-color: #f8f9fa; /* Light background color */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* 3D effect */
+  border-radius: 8px;
+  display: flex; /* Set up flexbox */
+  flex-wrap: wrap; /* Allow multiple lines */
+  justify-content: center; /* Center items horizontally */
+  gap: 10px; /* Spacing between cards */
+  width: 50%;
+  margin-left: 300px;
 }
 
-section {
+.showPlayers .not-submitted h2 {
+  text-align: center;
+  width: 100%; /* Full width for the title */
   margin-bottom: 20px;
 }
 
-h1 {
-  font-size: 2.5em;
+.showPlayers ul {
+  list-style-type: none; /* Removes default list styling */
+  padding: 0;
+  display: flex; /* Align list items in a row */
+  flex-wrap: wrap; /* Allow wrapping */
+  width: 100%; /* Full width */
+  justify-content: center; /* Center items */
+  gap: 10px; /* Spacing between items */
+}
+
+.showPlayers li {
+  background-color: #4CAF50; /* Vibrant green background for cards */
+  color: white; /* White text for contrast */
+  padding: 8px 16px; /* Compact padding */
+  border-radius: 20px; /* Rounded corners for a pill-like shape */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle 3D effect */
   text-align: center;
-  margin-bottom: 0.5em;
+  font-size: 14px; /* Smaller font size for compactness */
 }
 
-h2 {
-  font-size: 2em;
-  margin-bottom: 0.25em;
+/* Remove Section if No Players Need to Submit */
+.showPlayers:empty {
+  display: none;
 }
 
-h3 {
-  font-size: 1.5em;
-  margin-bottom: 0.25em;
+/* Style for the Show Teams Section */
+/* Style for the Show Teams Section */
+.showTeams {
+  margin: 20px auto;
+  display: flex; 
+  flex-wrap: wrap; /* Allow wrapping to the next line */
+  justify-content: center; /* Center the items horizontally */
+  gap: 20px; /* Spacing between team containers */
+  text-align: center;
 }
 
-/* Player List Styles */
-ul {
+.showTeams h1 {
+  font-size: 28px;
+  width: 100%; /* Full width to separate from flex items */
+  margin-bottom: 20px;
+}
+
+/* Style for Each Team Container */
+.showTeams > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f8f9fa; /* Light background color */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* 3D effect */
+  border-radius: 8px;
+  padding: 15px;
+  animation: fadeIn 1s; /* Animation for the team container */
+  width: calc(50% - 20px); /* Half width minus the gap */
+}
+
+/* Keyframes for fadeIn Animation */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+
+/* Style for Team Name and Score */
+.showTeams h2 {
+  background-color: #4CAF50; /* Vibrant green background */
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* 3D effect */
+  margin-bottom: 10px;
+}
+
+.showTeams p {
+  margin-bottom: 15px;
+}
+
+/* Style for the Player List in Each Team */
+.showTeams ul {
   list-style-type: none;
   padding: 0;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
-li {
-  background-color: #e3f2fd;
-  padding: 10px;
-  margin-bottom: 5px;
-  border-radius: 5px;
-  box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
-}
-
-/* Button Styles */
-button {
-  background-color: #4caf50;
+/* Style for Each Player Card */
+.showTeams li {
+  background-color: #007bff; /* Blue background for cards */
   color: white;
-  border: none;
-  padding: 10px 20px;
+  padding: 8px 16px;
+  border-radius: 20px; /* Rounded corners for a pill-like shape */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle 3D effect */
   text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 12px;
-  transition: background-color 0.3s;
+  font-size: 14px;
+  transition: transform 0.3s ease; /* Transition for hover effect */
 }
 
-button:hover {
-  background-color: #45a049;
+.showTeams li:hover {
+  transform: scale(1.1); /* Scale up on hover */
 }
 
-/* Messages Styles */
-.error-message, .success-message {
-  text-align: center;
+/* Basic style for sections containing buttons */
+.createTeams, .startGame {
+  text-align: center; /* Center aligns content within the section */
+  margin: 20px 0; /* Adds margin for spacing */
+}
+
+/* Style for buttons */
+.createTeams button, .startGame button {
+  padding: 10px 20px; /* Padding for button size */
+  background-color: #007bff; /* Button color */
+  color: white; /* Text color */
+  border: none; /* Removes default border */
+  border-radius: 4px; /* Rounded corners for buttons */
+  cursor: pointer; /* Changes cursor to indicate button */
+  font-size: 16px; /* Font size for button text */
+  margin: 5px; /* Margin around buttons */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow for a subtle 3D effect */
+  transition: background-color 0.3s; /* Transition for a hover effect */
+}
+
+.createTeams button:hover, .startGame button:hover {
+  background-color: #0056b3; /* Darker color on hover */
+}
+
+/* Container for all messages */
+.messages {
+  text-align: center; /* Center aligns the messages */
+  margin: 20px 0; /* Space above and below the message container */
+}
+
+/* Common style for message sections */
+.messages section {
+  margin-bottom: 10px; /* Spacing between message sections */
+}
+
+/* Style for error messages */
+.error-message .error {
+  color: white;
+  background-color: #EF4040; /* Red for errors */
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  display: inline-block; /* Only as wide as its content */
+  margin: 0 auto; /* Centering */
 }
 
-.error {
-  /* background-color: #ffcccb; */
-  color: #d8000c;
-}
-
-.success {
-  background-color: #ddffcc;
-  color: #4bb543;
-}
-
-/* Team and Player Section Styles */
-.not-submitted, .submit-words, .start-game {
-  /* background-color: #e1bee7; */
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
-}
-
-.team {
-  background-color: #fff8e1;
-  padding: 15px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
-  margin-bottom: 20px;
-}
-
-/* Grid Layout for Teams */
-.teams-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  grid-gap: 20px;
+/* Style for success messages */
+.success-message .success {
+  color: white;
+  background-color: #28a745; /* Green for success */
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  display: inline-block; /* Only as wide as its content */
+  margin: 0 auto; /* Centering */
 }

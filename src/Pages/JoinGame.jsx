@@ -60,11 +60,14 @@ const JoinGame = () => {
       setMessage("Game Joined Successfully")
       setPlayers(response.data.data.players)
       setShowMessage(true)
-
       setTimeout(() => {
         setShowMessage(false)
         setMessage('')
       }, 1500)
+      setTimeout(()=>{
+        window.location.reload()
+      },2000)
+
     }
     catch (error) {
       setError("You have already joined the game")
