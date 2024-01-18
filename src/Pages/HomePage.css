@@ -5,7 +5,6 @@
   align-items: center;
   justify-content: flex-start;
   background-color: #f9f9f9;
-  color: #13005A;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   padding: 20px;
 }
@@ -126,16 +125,15 @@
 }
 
 .form-buttons {
-  /* display: flex; */
   justify-content: space-between;
   margin-top: 1rem;
 }
 
 .back-button {
-  background-color: #a9a9a9; /* A neutral gray color */
+  background-color: #a9a9a9;
   margin-right: 10px;
 }
 
 .back-button:hover {
-  background-color: #F2F7A1; /* A darker shade for hover effect */
+  background-color: #F2F7A1; 
 }

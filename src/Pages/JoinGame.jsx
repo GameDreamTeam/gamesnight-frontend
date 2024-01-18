@@ -12,11 +12,46 @@ const JoinGame = () => {
   const [players, setPlayers] = useState([])
   const [showMessage, setShowMessage] = useState(false)
   const [showError, setShowError] = useState(false)
-  const [adminId, setAdminId] = useState(null) 
+  const [adminId, setAdminId] = useState(null)
   const [currentPlayerId, setCurrentPlayerId] = useState(null)
   const [copied, setCopied] = useState(false);
-
   const gameLink = `http://localhost:3000/games/${gameId}`
+
+  useEffect(() => {
+    const fetchPlayerId = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/v0/players/`, { withCredentials: true })
+        if (response.data.status === 'success') {
+          setCurrentPlayerId(response.data.data.id)
+        }
+      } 
+      catch (error) {
+        setError("Middleware issue in generating new player cookie")
+      }
+    }
+
+    fetchPlayerId()
+  }, [currentPlayerId])
+
+  useEffect(() => {
+    const fetchLobbyPlayers = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/v0/games/${gameId}/meta`, { withCredentials: true })
+        if (response.data.status === 'success') {
+          setPlayers(response.data.data.players)
+          setAdminId(response.data.data.adminId)
+        }
+      } catch (error) {
+        navigate("/home")
+      }
+
+      setTimeout(fetchLobbyPlayers, 4000);
+
+    }
+
+    fetchLobbyPlayers()
+  }, [])
+
 
   const handleJoinGame = async (e) => {
     e.preventDefault()
@@ -30,7 +65,7 @@ const JoinGame = () => {
         setShowMessage(false)
         setMessage('')
       }, 1500)
-    } 
+    }
     catch (error) {
       setError("You have already joined the game")
       setShowError(true)
@@ -41,39 +76,6 @@ const JoinGame = () => {
       }, 1500)
     }
   }
-
-  useEffect(() => {
-    const fetchLobbyPlayers = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8080/v0/games/${gameId}/meta`, { withCredentials: true })
-        if (response.data.status === 'success') {
-          setPlayers(response.data.data.players)
-          setAdminId(response.data.data.adminId)
-        }
-      } catch (error) {
-        navigate("/home")
-      }
-      setTimeout(fetchLobbyPlayers, 4000);
-
-    }
-
-    fetchLobbyPlayers()
-  },[]) 
-
-  useEffect(() => {
-    const fetchPlayerId = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8080/v0/players/`, { withCredentials: true })
-        if (response.data.status === 'success') {
-          setCurrentPlayerId(response.data.data.id)
-        }
-      } catch (error) {
-        console.error('Error Getting Player Data', error)
-      }
-    };
-
-    fetchPlayerId()
-  },[]) 
 
   const handleDeletePlayer = async (playerId) => {
     const isConfirmed = window.confirm("Are you sure you want to delete this player?")
@@ -103,15 +105,15 @@ const JoinGame = () => {
     }
   }
 
-  const handleGoToAddPhrases = async(e) => {
+  const handleGoToAddPhrases = async (e) => {
     e.preventDefault()
-    try{
-      const response =  await axios.patch(`http://localhost:8080/v0/games/${gameId}/update-state`, null, { withCredentials: true })
+    try {
+      const response = await axios.patch(`http://localhost:8080/v0/games/${gameId}/update-state`, null, { withCredentials: true })
       if (response.data.status === 'success') {
         navigate(`/games/${gameId}/submit`)
       }
     }
-    catch(e){
+    catch (e) {
       setError("Not enough players to start the game")
       setShowError(true)
 
@@ -126,14 +128,14 @@ const JoinGame = () => {
     const checkGameState = async () => {
       try {
         const response = await axios.get(`http://localhost:8080/v0/games/${gameId}/details`, { withCredentials: true })
-        
+
         if (response.data.status === 'success' && response.data.data.state === 1) {
           navigate(`/games/${gameId}/submit`)
         }
       } catch (error) {
         console.error('Error checking game state', error)
       }
-      setTimeout(checkGameState,4000)
+      setTimeout(checkGameState, 4000)
     }
 
     checkGameState()
@@ -141,68 +143,81 @@ const JoinGame = () => {
 
   return (
     <>
-    <div className="game-container">
-      
-      <header className="game-header">
-        <h1>Welcome to the Game: {gameId}</h1>
-      </header>
+      <div>
+        <header className="game-header">
+          <h1>Welcome to the Game: {gameId}</h1>
+        </header>
+      </div>
 
-      <section className="share-link">
-        <p>Share this link for others to join:</p>
-        <div className={`link-container ${copied ? 'copied' : ''}`}>
-          <input type="text" value={gameLink} readOnly />
-          <button onClick={() => {
-              navigator.clipboard.writeText(gameLink);
-              setCopied(true);
-              setTimeout(() => setCopied(false), 1000);
+      <div>
+        <section className="share-link">
+          <p>Share this link for others to join:</p>
+
+          <div className="link-container">
+            <input type="text" value={gameLink} readOnly />
+            <button onClick={() => {
+              navigator.clipboard.writeText(gameLink)
+              setCopied(true)
+              setTimeout(() => setCopied(false), 3000)
             }}>
-            Copy Link
-          </button>
-          {copied && <div className="copied-message">Copied to Clipboard</div>}
-        </div>
-      </section>
+              {copied ? 'Copied' : 'Copy Link'}
+            </button>
+          </div>
 
-      <section className="join-game">
-        <form onSubmit={handleJoinGame} className="join-form">
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="Enter your username"
-            required
-          />
-          <button type="submit" class="join-game-button">Join Game</button>
-        </form>
-        {showMessage && <div className="message success">{message}</div>}
-        {showError && <div className="message error">{error}</div>}
-      </section>
-
-      <section className="lobby">
-        <h2>Lobby</h2>
-        <div className="player-list">
-          {players.map((player) => (
-            <div className="player-card" key={player.id}>
-              <span>{player.name}</span>
-              {currentPlayerId === adminId && (
-                <button
-                  className="delete-button"
-                  onClick={() => handleDeletePlayer(player.id)}
-                >
-                  &#x2715;
-                </button>
-              )}
-            </div>
-          ))}
-        </div>
-      </section>
-    </div>
-    <div class="submit-word">
-      {currentPlayerId === adminId && (
-        <section className="submit-words">
-          <button onClick={handleGoToAddPhrases} class="next-button">Everyone's Here</button>
         </section>
-      )}
-    </div>
+      </div>
+
+
+      <div>
+        <section className="join-game">
+
+          <form onSubmit={handleJoinGame} className="join-form">
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Enter your username"
+              required
+            />
+            <button type="submit" class="join-game-button">Join Game</button>
+          </form>
+
+          {showMessage && <div className="message success">{message}</div>}
+          {showError && <div className="message error">{error}</div>}
+        </section>
+      </div>
+
+      <div>
+        <section className="lobby">
+          <h2>Lobby</h2>
+
+          <div className="player-list">
+            {players.map((player) => (
+              <div className="player-card" key={player.id}>
+                <span>{player.name}</span>
+                {currentPlayerId === adminId && (
+                  <button
+                    className="delete-button"
+                    onClick={() => handleDeletePlayer(player.id)}
+                  >
+                    &#x2715;
+                  </button>
+                )}
+              </div>
+            ))}
+          </div>
+
+        </section>
+      </div>
+
+      <div class="submit-word">
+        {currentPlayerId === adminId && (
+          <section className="submit-words">
+            <button onClick={handleGoToAddPhrases} class="next-button">Everyone's Here</button>
+          </section>
+        )}
+      </div>
+
     </>
   )
 }

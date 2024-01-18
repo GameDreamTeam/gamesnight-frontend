@@ -1,27 +1,11 @@
-/* General Styles */
-/* body {
-  font-family: 'Arial', sans-serif;
-  background-color: #f4f4f4;
-  color: #333;
-  margin: 0;
-  padding: 0;
-} */
-
-/* Container Styles */
 .DivideTeams-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
 }
 
-/* Section Styles */
 section {
   margin-bottom: 20px;
-}
-
-/* Header Styles */
-h1, h2, h3 {
-  color: #0d47a1;
 }
 
 h1 {
