@@ -13,24 +13,19 @@ const HomePage = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-
   const createGame = async () => {
     try {
-      const response = await axios.post(`${API_BASE_URL}/v0/games/`, null, {
-        withCredentials: true,
-      });
+      const response = await axios.post(`${API_BASE_URL}/v0/games/`, null, {withCredentials: true})
       return response.data?.data?.gameId;
     } catch (error) {
       throw new Error('Error creating a new game. Please try again.');
     }
-  };
+  }
 
   const checkGameExists = async (gameId) => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/v0/games/${gameId}/meta`, {
-        withCredentials: true,
-      });
-      return response.data.status === 'success';
+      const response = await axios.get(`${API_BASE_URL}/v0/games/${gameId}/meta`, {withCredentials: true,});
+      return response.data.status === 'success'
     } catch (error) {
       throw new Error('Unable to find game');
     }
