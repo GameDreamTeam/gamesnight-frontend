@@ -13,8 +13,11 @@ const AddPhrases = () => {
   useEffect(() => {
     const fetchPlayer = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/v0/players/`, { withCredentials: true })
-        if (response.data.status === 'success' && response.data.data.wordsSubmitted === true) {
+        const response = await axios.get(
+          `http://localhost:8080/v0/players/`, 
+          { withCredentials: true }
+          )
+        if (response.data.data.wordsSubmitted === true) {
           navigate(`/games/${gameId}/divide-teams`)
         }
       } catch (error) {
@@ -22,7 +25,7 @@ const AddPhrases = () => {
       }
     }
     fetchPlayer()
-  }, [])
+  }, [gameId])
 
   const handlePhraseChange = (index, value) => {
     const updatedPhrases = phrases.map((phrase, i) => (i === index ? value : phrase))
@@ -42,7 +45,7 @@ const AddPhrases = () => {
       setIsError(false);
       setTimeout(()=>{
         window.location.reload()
-      },3000)
+      },2500)
     }
     catch (error) {
       setMessage(error.response?.data.error || 'An error occurred');

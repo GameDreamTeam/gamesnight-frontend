@@ -18,69 +18,152 @@ const JoinGame = () => {
   const gameLink = `http://localhost:3000/games/${gameId}`
 
   useEffect(() => {
+    let isCancelled = false;
     const fetchPlayerId = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/v0/players/`, { withCredentials: true })
-        if (response.data.status === 'success') {
+        const response = await axios.get(
+          `http://localhost:8080/v0/players/`,
+          { withCredentials: true }
+        )
+        if (!isCancelled) {
           setCurrentPlayerId(response.data.data.id)
         }
-      } 
+      }
       catch (error) {
-        setError("Middleware issue in generating new player cookie")
+        if (error.response) {
+          console.error("Backend throwed error:", error.response.data)
+          setError(error.response.data.error)
+        }
+        else if (error.request) {
+          console.error("No response from the server:", error.request)
+          setError('Server is down or not reachable')
+        }
+        else {
+          console.error("Error:", error.message)
+          setError('Error in making the request')
+        }
       }
     }
 
     fetchPlayerId()
-  }, [currentPlayerId])
+    return () => {
+      isCancelled = true;
+    };
+  }, [])
 
   useEffect(() => {
+    let isCancelled = false
     const fetchLobbyPlayers = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/v0/games/${gameId}/meta`, { withCredentials: true })
-        if (response.data.status === 'success') {
+        const response = await axios.get(
+          `http://localhost:8080/v0/games/${gameId}/meta`,
+          { withCredentials: true }
+        )
+
+        if (!isCancelled) {
           setPlayers(response.data.data.players)
           setAdminId(response.data.data.adminId)
         }
-      } catch (error) {
-        navigate("/home")
       }
-
+      catch (error) {
+        if (error.response) {
+          console.error("Backend throwed error:", error.response.data)
+          setError(error.response.data.error)
+          navigate("/game-not-found")
+          window.location.reload()
+        }
+        else if (error.request) {
+          console.error("No response from the server:", error.request)
+          setError('Server is down or not reachable')
+        }
+        else {
+          console.error("Error:", error.message)
+          setError('Error in making the request')
+        }
+      }
       setTimeout(fetchLobbyPlayers, 4000);
-
     }
 
     fetchLobbyPlayers()
-  }, [])
+    const intervalId = setInterval(fetchLobbyPlayers, 4000);
+    return () => {
+      isCancelled = true;
+      clearInterval(intervalId);
+    };
+  }, [gameId, navigate])
 
+  useEffect(() => {
+    let isCancelled = false
+    const checkGameState = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/v0/games/${gameId}/details`,
+          { withCredentials: true }
+        )
+        if (!isCancelled && response.data.data.state === 1) {
+          navigate(`/games/${gameId}/submit`)
+        }
+      }
+      catch (error) {
+        if (error.response) {
+          console.error("Backend throwed error:", error.response.data)
+          setError(error.response.data.error)
+          navigate("/game-not-found")
+          window.location.reload()
+        }
+        else if (error.request) {
+          console.error("No response from the server:", error.request)
+          setError('Server is down or not reachable')
+        }
+        else {
+          console.error("Error:", error.message)
+          setError('Error in making the request')
+        }
+      }
+      setTimeout(checkGameState, 4000)
+    }
+
+    checkGameState()
+    const intervalId = setInterval(checkGameState, 4000);
+    return () => {
+      isCancelled = true;
+      clearInterval(intervalId);
+    };
+  }, [gameId, navigate])
 
   const handleJoinGame = async (e) => {
     e.preventDefault()
     try {
-      const response = await axios.post(`http://localhost:8080/v0/games/${gameId}/join`, { name }, { withCredentials: true })
+      const response = await axios.post(
+        `http://localhost:8080/v0/games/${gameId}/join`,
+        { name },
+        { withCredentials: true }
+      )
       setMessage("Game Joined Successfully")
       setPlayers(response.data.data.players)
       setShowMessage(true)
+
       setTimeout(() => {
         setShowMessage(false)
         setMessage('')
-      }, 1500)
-      setTimeout(()=>{
-        window.location.reload()
-      },2000)
+      }, 2000)
 
+      setTimeout(() => {
+        window.location.reload()
+      }, 2000)
     }
     catch (error) {
-      setError("You have already joined the game")
+      setError(error.response?.data?.error)
       setShowError(true)
 
       setTimeout(() => {
         setShowError(false)
         setError('')
-      }, 1500)
+      }, 2000)
     }
   }
 
-  const handleDeletePlayer = async (playerId) => {
+  const handleDeletePlayer = (playerId) => {
     const isConfirmed = window.confirm("Are you sure you want to delete this player?")
     if (isConfirmed) {
       deletePlayer(playerId)
@@ -89,7 +172,10 @@ const JoinGame = () => {
 
   const deletePlayer = async (playerId) => {
     try {
-      await axios.delete(`http://localhost:8080/v0/games/${gameId}/players/${playerId}`, { withCredentials: true })
+      await axios.delete(
+        `http://localhost:8080/v0/games/${gameId}/players/${playerId}`,
+        { withCredentials: true }
+      )
       setMessage("Player removed Successfully")
       setShowMessage(true)
 
@@ -99,8 +185,9 @@ const JoinGame = () => {
       }, 1500)
 
     } catch (error) {
-      setError("Host cannot be removed")
+      setError(error.response?.data?.error)
       setShowError(true)
+
       setTimeout(() => {
         setShowError(false)
         setError('')
@@ -111,10 +198,8 @@ const JoinGame = () => {
   const handleGoToAddPhrases = async (e) => {
     e.preventDefault()
     try {
-      const response = await axios.patch(`http://localhost:8080/v0/games/${gameId}/update-state`, null, { withCredentials: true })
-      if (response.data.status === 'success') {
-        navigate(`/games/${gameId}/submit`)
-      }
+      await axios.patch(`http://localhost:8080/v0/games/${gameId}/update-state`, null, { withCredentials: true })
+      navigate(`/games/${gameId}/submit`)
     }
     catch (e) {
       setError("Not enough players to start the game")
@@ -126,23 +211,6 @@ const JoinGame = () => {
       }, 1500)
     }
   }
-
-  useEffect(() => {
-    const checkGameState = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8080/v0/games/${gameId}/details`, { withCredentials: true })
-
-        if (response.data.status === 'success' && response.data.data.state === 1) {
-          navigate(`/games/${gameId}/submit`)
-        }
-      } catch (error) {
-        console.error('Error checking game state', error)
-      }
-      setTimeout(checkGameState, 4000)
-    }
-
-    checkGameState()
-  })
 
   return (
     <>
@@ -167,56 +235,47 @@ const JoinGame = () => {
             </button>
           </div>
 
-        </section>
-      </div>
-
-
-      <div>
-        <section className="join-game">
-
-          <form onSubmit={handleJoinGame} className="join-form">
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Enter your username"
-              required
-            />
-            <button type="submit" class="join-game-button">Join Game</button>
-          </form>
-
-          {showMessage && <div className="message success">{message}</div>}
-          {showError && <div className="message error">{error}</div>}
-        </section>
-      </div>
-
-      <div>
-        <section className="lobby">
-          <h2>Lobby</h2>
-
-          <div className="player-list">
-            {players.map((player) => (
-              <div className="player-card" key={player.id}>
-                <span>{player.name}</span>
-                {currentPlayerId === adminId && (
-                  <button
-                    className="delete-button"
-                    onClick={() => handleDeletePlayer(player.id)}
-                  >
-                    &#x2715;
-                  </button>
-                )}
-              </div>
-            ))}
-          </div>
+          <p>Or the Code : {gameId}</p>
 
         </section>
       </div>
 
-      <div class="submit-word">
+      {showMessage && <div className="message success">{message}</div>}
+      {showError && <div className="message error">{error}</div>}
+
+      <div className="join-game">
+        <h2>Lobby</h2>
+        <form onSubmit={handleJoinGame} className="join-form">
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Enter your username"
+            required
+          />
+          <button type="submit" className="join-game-button">Join Game</button>
+        </form>
+        <div className="player-list">
+          {players.map((player) => (
+            <div className="player-card" key={player.id}>
+              <span>{player.name}</span>
+              {currentPlayerId === adminId && (
+                <button
+                  className="delete-button"
+                  onClick={() => handleDeletePlayer(player.id)}
+                >
+                  &#x2715;
+                </button>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="submit-word">
         {currentPlayerId === adminId && (
           <section className="submit-words">
-            <button onClick={handleGoToAddPhrases} class="next-button">Everyone's Here</button>
+            <button onClick={handleGoToAddPhrases} className="next-button">Everyone's Here</button>
           </section>
         )}
       </div>

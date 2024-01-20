@@ -1,33 +1,31 @@
-.home-container {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  background-color: #f9f9f9;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  padding: 20px;
-}
-
-.home-header {
-  margin-bottom: 1rem;
+ .home-header {
+  text-align: center; /* Center the content */
+  background-color: #f9f9f9; /* Background color for contrast with the 3D effect */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for a 3D effect */
+  padding: 20px; /* Padding for spacing around the text */
+  border-radius: 8px; /* Rounded corners */
+  margin: 20px auto; /* Vertical margin for spacing and auto for horizontal centering */
 }
 
 .home-header h1 {
-  color: #27a89e;
-  text-transform: uppercase;
-  font-size: 2.5rem;
+  color: #27a89e; /* The specified text color */
+  text-transform: uppercase; /* Uppercase text for stylistic choice */
+  font-size: 2.5rem; /* Larger font size for emphasis */
+  margin: 0; /* Reset default margin */
 }
 
-.join-section {
-  text-align: center;
-  width: 100%;
+.option {
+  text-align: center; /* Center the text */
+  color: #6c757d; 
+  font-size: 1.2rem; /* Slightly larger font size for readability */
+  margin: 20px 0; /* Margin for spacing around the paragraph */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Aesthetic font choice */
 }
 
 .buttons-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: flex; /* Use flexbox for layout */
+  justify-content: center; /* Center buttons horizontally */
+  gap: 10px; /* Space between buttons */
 }
 
 .button {
@@ -64,76 +62,131 @@
 }
 
 .player-join-form {
-  flex-direction: column;
-  align-items: center;
-  margin-top: 1rem;
-}
-
-.show-player-join-form .player-join-form {
-  display: flex;
+  text-align: center;
+  margin: 20px 0;
 }
 
 .game-id-input {
-  padding: 0.5rem;
-  border: 2px solid #27a89e;
+  padding: 10px;
+  margin-bottom: 15px; /* Space between input and buttons */
+  border: 2px solid #27a89e; /* Stylish border color */
   border-radius: 5px;
-  margin-right: 0.5rem;
+  width: 60%; /* Adjust width as needed */
+  max-width: 300px; /* Maximum width to avoid overly wide input field */
+  text-transform: uppercase; /* Uppercase text in input */
+}
+
+.buttons-containers {
+  display: flex;
+  justify-content: center; /* Center buttons horizontally */
+  gap: 10px; /* Space between buttons */
+}
+
+.button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.back-button {
+  background-color: #a9a9a9; /* Gray color for back button */
+}
+
+.back-button:hover {
+  background-color: #F2F7A1; /* Light yellow for hover effect */
+}
+
+.join-button {
+  background-color: #65B741; /* Green color for join button */
+}
+
+.join-button:hover {
+  background-color: #F2F7A1; /* Light yellow for hover effect */
 }
 
 .error-message {
-  color: #d9534f;
-  margin-top: 1rem;
+  background-color: #d9534f; /* Red background for error */
+  color: white; /* White text for contrast */
+  padding: 10px;
+  border-radius: 5px; /* Rounded corners */
+  text-align: center; /* Center the text */
+  margin: 20px 0; /* Space above and below the error message */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  animation: shake 0.5s; /* Shake animation for attention */
+  width: 80%; /* Adjust the width as needed */
+  max-width: 400px; /* Maximum width */
+  margin-left: auto; /* Centering */
+  margin-right: auto; /* Centering */
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
 }
 
 .image-container {
-  width: 100%;
+  display: flex; /* Use flexbox for layout */
+  justify-content: center; /* Center images horizontally */
+  gap: 50px; /* Space between images */
   margin-top: 1rem;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  gap: 20px;
 }
 
 .responsive-image {
-  max-width: 45%;
-  height: auto;
-  border-radius: 5px;
+  max-width: 35%; /* Adjust the width as necessary */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Shadow for 3D effect */
+  transition: transform 0.3s ease; /* Smooth transition for hover effect */
 }
+
+.responsive-image:hover {
+  transform: scale(1.05); /* Slightly scale up on hover */
+}
+
+/* Existing styles... */
 
 @media (max-width: 768px) {
   .home-header h1 {
-    font-size: 1.5rem;
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
+    font-size: 1.5rem; /* Smaller font size for smaller screens */
+  }
+
+  .game-id-input, .buttons-containers .button {
+    width: 80%; /* Wider input and buttons on smaller screens */
+    max-width: none; /* Override max-width */
   }
 
   .responsive-image {
-    max-width: 45%;
+    max-width: 80%; /* Larger images for smaller screens */
   }
 }
 
 @media (max-width: 480px) {
+  .home-header h1 {
+    font-size: 1.2rem; /* Even smaller font size for very small screens */
+  }
+
   .image-container {
-    flex-direction: column;
+    flex-direction: column; 
+    gap: 15px; /* Smaller gap between images */
     align-items: center;
   }
 
-  .responsive-image {
-    max-width: 80%;
-    margin-bottom: 20px;
+  .buttons-container, .player-join-form, .buttons-containers {
+    width: 100%; /* Full width for the containers */
   }
-}
 
-.form-buttons {
-  justify-content: space-between;
-  margin-top: 1rem;
-}
-
-.back-button {
-  background-color: #a9a9a9;
-  margin-right: 10px;
-}
-
-.back-button:hover {
-  background-color: #F2F7A1; 
+  .button {
+    padding: 0.8rem 1.6rem; /* Slightly smaller padding for buttons */
+  }
 }

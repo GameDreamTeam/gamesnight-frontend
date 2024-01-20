@@ -1,208 +1,229 @@
 .game-header {
-  padding: 15px 0; 
-  text-align: center; 
-  margin-bottom: 20px; 
+  text-align: center;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px auto;
   color: #27a89e;
-  font-family: Arial, sans-serif; 
+  text-transform: uppercase;
 }
 
 .share-link {
-  padding: 20px;
-  background-color: #f8f9fa; /* Light background color */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-  margin: 20px auto; /* Centers the section and adds margin for spacing */
-  border-radius: 8px; /* Rounded corners */
-  width: 60%; /* Makes the section horizontally shorter */
-  max-width: 500px; /* Maximum width */
-  text-align: center; /* Centers the text */
-  color: #D24545;
-  font-weight: bold; 
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  border-radius: 10px;
+  margin: 0 auto 30px;
+  width: 80%;
+  max-width: 600px;
+  color: #30E3CA;
 }
 
 .link-container {
   display: flex;
   align-items: center;
-  justify-content: center; 
-  gap: 10px; 
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 10px;
 }
 
 .link-container input {
+  flex: 1;
   padding: 10px;
-  border: 2px solid #007bff; 
+  border: 2px solid #DCF2F1;
   border-radius: 4px;
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2); 
-  width: 70%; /* Adjusted width */
+  font-size: 1rem;
 }
 
 .link-container button {
-  padding: 10px 15px;
-  background-color: #007bff; 
-  color: white;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
   border: none;
   border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* Shadow for a 3D raised button effect */
   cursor: pointer;
+  font-size: 1rem;
   transition: all 0.3s ease;
 }
 
 .link-container button:hover {
-  background-color: #0056b3; /* Darker shade on hover */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Enhanced shadow on hover for 3D effect */
+  background-color: green;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-@media (max-width: 600px) {
-  .share-link {
-    width: 80%; /* Adjust width for smaller screens */
-  }
+.share-link p:last-of-type {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 20px;
+}
 
-  .link-container input {
-    width: 100%; /* Full width for input on smaller screens */
-  }
+.message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+  width: 100%;
+}
 
-  .link-container {
-    flex-direction: column; /* Stack input and button vertically on smaller screens */
-  }
+.message.success {
+  background-color: #28a745;
+  color: white;
+}
+
+.message.error {
+  background-color: #dc3545;
+  color: white;
 }
 
 .join-game {
-  text-align: center; /* Center aligns the content */
-  margin: 20px auto; /* Centers the section and adds margin for spacing */
-  width: 50%; /* Sets the width to 50% */
-  max-width: 400px; /* Maximum width to avoid overly wide forms on large screens */
+  background-color: #f8f9fa;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  margin: 20px auto;
+  max-width: 600px;
+}
+
+.join-game h2 {
+  margin-bottom: 20px;
+  color: #365486;
+  font-size: 1.5rem;
 }
 
 .join-form {
   display: flex;
-  flex-direction: column;
-  align-items: center; /* Centers the form items */
-  margin-top: 20px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 .join-form input {
+  flex-grow: 1;
+  margin-right: 10px;
   padding: 10px;
-  margin-bottom: 10px; /* Space between the input and the button */
+  border: 2px solid #DCF2F1;
   border-radius: 4px;
-  border: 1px solid #ccc; /* Light gray border */
-  width: 100%; /* Full width within the form */
 }
 
 .join-game-button {
   padding: 10px 20px;
-  background-color: #007bff; /* Blue color for the button */
+  background-color: #007bff;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .join-game-button:hover {
-  background-color: #0056b3; /* Darker shade on hover */
-}
-
-.message {
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 4px;
-  text-align: center;
-  width: 100%;
-}
-
-.message.error {
-  background-color: #EF4040; /* Red background for error messages */
-  color: white;
-}
-
-.message.success {
-  background-color: #28a745; /* Green background for success messages */
-  color: white;
-}
-
-@media (max-width: 600px) {
-  .join-game {
-    width: 80%; /* Adjust width for smaller screens */
-  }
-}
-
-.lobby {
-  width: 50%; /* Sets the width to 50% */
-  margin: 20px auto; 
-  text-align: center; /* Centers the content */
-  padding: 20px;
-  background-color: #f8f9fa; /* Light background color */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 3D effect with shadow */
-  border-radius: 8px; /* Rounded corners */
-}
-
-.lobby h2 {
-  color: #27a89e; /* Dark color for the heading */
-  margin-bottom: 20px; /* Spacing below the heading */
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .player-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Responsive grid layout */
-  gap: 10px; /* Spacing between cards */
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
 }
 
 .player-card {
-  background-color: #FEBBCC; 
-  color: black;
+  background-color: #DCFFB7;
   padding: 10px;
   border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); /* 3D effect with shadow */
-  position: relative; /* Needed for absolute positioning of the button */
-  text-align: left; /* Align text to the left */
-  font-size: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+  text-align: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.player-card span {
+  font-weight: bold;
 }
 
 .delete-button {
-  background-color: #EF4040; /* Red color for delete button */
+  background-color: #EF4040;
   color: white;
   border: none;
   padding: 5px;
-  border-radius: 50%; /* Circular button */
+  border-radius: 50%;
   cursor: pointer;
-  position: absolute; /* Positioning relative to the player card */
-  top: 5px; /* Adjusted to better align with the top of the card */
+  position: absolute;
   right: 10px;
-  font-size: 16px; /* Optional: Adjust if the button appears too large or small */
+  top: 10px;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .delete-button:hover {
-  background-color: #ff5252; 
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-@media (max-width: 600px) {
-  .lobby {
-    width: 80%; 
+@media (max-width: 768px) {
+  .join-game {
+    width: 90%;
+  }
+
+  .join-form {
+    flex-direction: column;
+  }
+
+  .join-form input {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .player-list {
+    grid-template-columns: 1fr;
   }
 }
 
-/* Container for Submit Words Section */
 .submit-word {
-  text-align: center; /* Center the contents */
-  margin-top: 30px; /* Space above the container */
+  text-align: center;
+  margin-top: 30px;
 }
 
-/* Section containing the button */
 .submit-words {
-  display: inline-block; /* Aligns the section in the center */
+  display: inline-block;
   margin: auto;
 }
 
-/* Next Button Styling */
 .next-button {
-  background-color: #4CAF50; /* Green color for the button */
-  color: white; /* White text for contrast */
-  padding: 15px 30px; /* Padding for a larger, more clickable area */
-  font-size: 18px; /* Larger font size for readability */
-  border: none; /* Removes default border */
-  border-radius: 5px; /* Slightly rounded corners for a modern look */
-  cursor: pointer; /* Changes cursor to a pointer to indicate it's clickable */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Shadow for a 3D effect */
-  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  background-color: #4CAF50;
+  color: white;
+  padding: 15px 30px;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease;
 }
 
 .next-button:hover {
-  background-color: #45a049; /* Slightly darker green on hover */
+  background-color: #45a049;
+}
+
+@media (max-width: 600px) {
+  .share-link, .join-game, .submit-word {
+    width: 95%;
+  }
+
+  .link-container, .join-form, .buttons-containers {
+    flex-direction: column;
+  }
+
+  .link-container input,
+  .link-container button,
+  .join-form input,
+  .join-form button {
+    width: 100%;
+  }
+
+  .game-header h1 {
+    font-size: 1.5rem;
+  }
 }
