@@ -142,14 +142,11 @@ const JoinGame = () => {
       setMessage("Game Joined Successfully")
       setPlayers(response.data.data.players)
       setShowMessage(true)
-
-      setTimeout(() => {
-        setShowMessage(false)
-        setMessage('')
-      }, 2000)
-
+      
       setTimeout(() => {
         window.location.reload()
+        setShowMessage(false)
+        setMessage('')
       }, 2000)
     }
     catch (error) {
@@ -200,7 +197,7 @@ const JoinGame = () => {
     try {
       await axios.patch(
         `http://localhost:8080/v0/games/${gameId}/update-state`,
-        null, 
+        null,
         { withCredentials: true }
       )
       navigate(`/games/${gameId}/submit`)
@@ -220,13 +217,13 @@ const JoinGame = () => {
     <>
       <div>
         <header className="game-header">
-          <h1>Welcome to the Game: {gameId}</h1>
+          <h1>🎲 Welcome to the Game: {gameId} 🎮</h1>
         </header>
       </div>
 
       <div>
         <section className="share-link">
-          <p>Share this link for others to join:</p>
+          <p>🔗 Share this link for others to join:</p>
 
           <div className="link-container">
             <input type="text" value={gameLink} readOnly />
@@ -235,29 +232,29 @@ const JoinGame = () => {
               setCopied(true)
               setTimeout(() => setCopied(false), 3000)
             }}>
-              {copied ? 'Copied' : 'Copy Link'}
+              {copied ? '✅ Copied!' : '📋 Copy Link'}
             </button>
           </div>
 
-          <p>Or the Code : {gameId}</p>
+          <p>Or the Code: {gameId}</p>
 
         </section>
       </div>
 
-      {showMessage && <div className="message-success">{message}</div>}
-      {showError && <div className="message-error">{error}</div>}
+      {showMessage && <div className="message-success">✨ {message}</div>}
+      {showError && <div className="message-error">⚠️ {error}</div>}
 
       <div className="join-game">
-        <h2>Lobby</h2>
+        <h2>👥 Lobby</h2>
         <form onSubmit={handleJoinGame} className="join-form">
           <input
             type="text"
             value={name}
             onChange={(e) => setUsername(e.target.value)}
-            placeholder="Enter your username"
+            placeholder="📛 Enter your username"
             required
           />
-          <button type="submit" className="join-game-button">Join Game</button>
+          <button type="submit" className="join-game-button">➡️ Join Game</button>
         </form>
         <div className="player-list">
           {players.map((player) => (
@@ -268,7 +265,7 @@ const JoinGame = () => {
                   className="delete-button"
                   onClick={() => handleDeletePlayer(player.id)}
                 >
-                  &#x2715;
+                  ❌
                 </button>
               )}
             </div>
@@ -279,10 +276,11 @@ const JoinGame = () => {
       <div className="submit-word">
         {currentPlayerId === adminId && (
           <section className="submit-words">
-            <button onClick={handleGoToAddPhrases} className="next-button">Everyone's Here</button>
+            <button onClick={handleGoToAddPhrases} className="next-button">🚀 Everyone's Here</button>
           </section>
         )}
       </div>
+
 
     </>
   )

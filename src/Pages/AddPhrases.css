@@ -24,10 +24,13 @@
 .phrases-form {
   display: flex;
   flex-direction: column;
+  align-items: center; /* Center align form items */
 }
 
 .phrase-input-group {
+  width: 100%; /* Full width of the container */
   margin-bottom: 15px;
+  text-align: center; /* Center the label and input */
 }
 
 .input-label {
@@ -36,7 +39,7 @@
 }
 
 .input-field {
-  width: 100%;
+  width: 100%; /* Full width for the input field */
   padding: 10px;
   border-radius: 4px;
   border: 1px solid #ccc;

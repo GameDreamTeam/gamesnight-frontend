@@ -15,9 +15,9 @@ const AddPhrases = () => {
     const fetchPlayer = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/v0/players/`, 
+          `http://localhost:8080/v0/players/`,
           { withCredentials: true }
-          )
+        )
         if (!isCancelled && response.data.data.wordsSubmitted === true) {
           navigate(`/games/${gameId}/divide-teams`)
         }
@@ -57,9 +57,9 @@ const AddPhrases = () => {
         { withCredentials: true }
       )
       setMessage('Phrases submitted successfully.');
-      setTimeout(()=>{
+      setTimeout(() => {
         window.location.reload()
-      },2000)
+      }, 2000)
     }
     catch (error) {
       setMessage(error.response?.data.error || 'An error occurred');
@@ -71,12 +71,12 @@ const AddPhrases = () => {
     <>
       <div className="add-phrases-wrapper">
         <div className="container">
-          <h2 className="title">Submit Your Phrases</h2>
+          <h2 className="title">📝 Submit Your Phrases</h2>
           <form className="phrases-form" onSubmit={submitPhrases}>
             {phrases.map((phrase, index) => (
               <div key={index} className="phrase-input-group">
                 <label htmlFor={`phrase-${index}`} className="input-label">
-                  Phrase {index + 1}
+                  Phrase {index + 1} 🗨️
                 </label>
                 <input
                   id={`phrase-${index}`}
@@ -89,7 +89,7 @@ const AddPhrases = () => {
                 />
               </div>
             ))}
-            <button type="submit" className="submit-button">Submit Phrases</button>
+            <button type="submit" className="submit-button">✏️ Submit Phrases</button>
           </form>
         </div>
       </div>
@@ -97,10 +97,11 @@ const AddPhrases = () => {
       <div>
         {message && (
           <div className={`submit-message ${isError ? 'error' : 'success'}`}>
-            {message}
+            {isError ? '⚠️' : '✅'} {message}
           </div>
         )}
       </div>
+
     </>
   )
 }

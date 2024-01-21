@@ -126,34 +126,34 @@ const DivideTeams = () => {
               <h2>Players yet to submit phrases 😔</h2>
               <ul>
                 {players.map((player) => (
-                  <li key={player.id}>{player.name}</li>
+                  <li key={player.id}>👤 {player.name}</li>
                 ))}
               </ul>
             </div>
           ) : (
-            <p>Waiting for Admin to start the game</p>
+            <p>🎉 Waiting for Admin to start the game 🎮</p>
           )}
         </section>
       </div>
 
-      {errorMessage && <p className="message-error">{errorMessage}</p>}
-      {successMessage && <p className="message-success">{successMessage}</p>}
+      {errorMessage && <p className="message-error">⚠️ {errorMessage}</p>}
+      {successMessage && <p className="message-success">✅ {successMessage}</p>}
 
       <div className="showTeams">
         {teams && teams.length > 0 ? (
           teams.map((team, index) => (
-            <div key={index} className="team-container"> {/* Add the class here */}
-              <h2>Team {team.name}</h2>
-              <h3>Players:</h3>
+            <div key={index} className="team-container">
+              <h2>🏆 Team {team.name}</h2>
+              <h3>👥 Players:</h3>
               <ul>
                 {team.players.map((player) => (
-                  <li key={player.id}>{player.name}</li>
+                  <li key={player.id}>👤 {player.name}</li>
                 ))}
               </ul>
             </div>
           ))
         ) : (
-          <p></p>
+          <p>🔍 Teams are being formed...</p>
         )}
       </div>
 
@@ -161,7 +161,7 @@ const DivideTeams = () => {
         <div className="createTeams">
           <section className="submit-words">
             {currentPlayerId === adminId && (
-              <button onClick={handleCreateTeams}>Create Teams</button>
+              <button onClick={handleCreateTeams}>🛠️ Create Teams</button>
             )}
           </section>
         </div>
@@ -169,7 +169,7 @@ const DivideTeams = () => {
         <div className="startGame">
           <section className="start-game">
             {currentPlayerId === adminId && (
-              <button onClick={handleStartGame}>Start Game</button>
+              <button onClick={handleStartGame}>🚀 Start Game</button>
             )}
           </section>
         </div>

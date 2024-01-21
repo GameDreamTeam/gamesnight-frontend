@@ -90,7 +90,7 @@ const HomePage = () => {
   return (
     <>
       <header className="home-header">
-        <h1>Welcome to the Charades Game!</h1>
+        <h1>🎭 Welcome to the Charades Game! 🎉</h1>
       </header>
 
       <p className="option">Choose to join as a host or a player</p>
@@ -98,10 +98,10 @@ const HomePage = () => {
       {!showPlayerOptions && (
         <div className="buttons-container">
           <button onClick={handleJoinAsHost} className="button host-button">
-            Host Game
+            🎲 Host Game
           </button>
           <button onClick={() => setShowPlayerOptions(true)} className="button player-button">
-            Join Game
+            👥 Join Game
           </button>
         </div>
       )}
@@ -111,7 +111,7 @@ const HomePage = () => {
           <form onSubmit={handleJoinAsPlayer} className="player-join-form">
             <input
               type="text"
-              placeholder="Enter Game ID"
+              placeholder="🔑 Enter Game ID"
               value={playerGameId}
               onChange={(e) => setPlayerGameId(e.target.value.toUpperCase())}
               maxLength="4"
@@ -120,23 +120,23 @@ const HomePage = () => {
 
             <div className="buttons-containers">
               <button type="button" onClick={handlePlayerOptionToggle} className="button back-button">
-                Back
+                🔙 Back
               </button>
               <button type="submit" className="button join-button">
-                Join Game
+                🚪 Join Game
               </button>
             </div>
-
           </form>
         </div>
       )}
 
-      {error && <p className="error-message">{error}</p>}
+      {error && <p className="error-message">⚠️ {error}</p>}
 
       <div className="image-container">
         <img src={people1} alt="House-Party-1" className="responsive-image" />
         <img src={people2} alt="House-Party-2" className="responsive-image" />
       </div>
+
 
     </>
   )
