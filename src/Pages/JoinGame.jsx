@@ -198,7 +198,11 @@ const JoinGame = () => {
   const handleGoToAddPhrases = async (e) => {
     e.preventDefault()
     try {
-      await axios.patch(`http://localhost:8080/v0/games/${gameId}/update-state`, null, { withCredentials: true })
+      await axios.patch(
+        `http://localhost:8080/v0/games/${gameId}/update-state`,
+        null, 
+        { withCredentials: true }
+      )
       navigate(`/games/${gameId}/submit`)
     }
     catch (e) {
@@ -240,8 +244,8 @@ const JoinGame = () => {
         </section>
       </div>
 
-      {showMessage && <div className="message success">{message}</div>}
-      {showError && <div className="message error">{error}</div>}
+      {showMessage && <div className="message-success">{message}</div>}
+      {showError && <div className="message-error">{error}</div>}
 
       <div className="join-game">
         <h2>Lobby</h2>

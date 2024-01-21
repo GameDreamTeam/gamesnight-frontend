@@ -1,179 +1,213 @@
-/* Style for the Show Players Section */
 .showPlayers {
-  margin: 20px;
-  padding: 10px;
-  background-color: #f8f9fa; /* Light background color */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* 3D effect */
+  display: block;
+  background-color: #f8f9fa;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
-  display: flex; /* Set up flexbox */
-  flex-wrap: wrap; /* Allow multiple lines */
-  justify-content: center; /* Center items horizontally */
-  gap: 10px; /* Spacing between cards */
-  width: 50%;
-  margin-left: 300px;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 600px;
+  transition: transform 0.5s;
+  transform-style: preserve-3d;
 }
 
-.showPlayers .not-submitted h2 {
+.showPlayers .not-submitted {
   text-align: center;
-  width: 100%; /* Full width for the title */
+  perspective: 1000px;
+}
+
+.showPlayers h2 {
+  color: #27a89e;
   margin-bottom: 20px;
 }
 
 .showPlayers ul {
-  list-style-type: none; /* Removes default list styling */
+  list-style-type: none;
   padding: 0;
-  display: flex; /* Align list items in a row */
-  flex-wrap: wrap; /* Allow wrapping */
-  width: 100%; /* Full width */
-  justify-content: center; /* Center items */
-  gap: 10px; /* Spacing between items */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+  justify-content: center;
 }
 
 .showPlayers li {
-  background-color: #4CAF50; /* Vibrant green background for cards */
-  color: white; /* White text for contrast */
-  padding: 8px 16px; /* Compact padding */
-  border-radius: 20px; /* Rounded corners for a pill-like shape */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle 3D effect */
-  text-align: center;
-  font-size: 14px; /* Smaller font size for compactness */
-}
-
-/* Remove Section if No Players Need to Submit */
-.showPlayers:empty {
-  display: none;
-}
-
-/* Style for the Show Teams Section */
-/* Style for the Show Teams Section */
-.showTeams {
-  margin: 20px auto;
-  display: flex; 
-  flex-wrap: wrap; /* Allow wrapping to the next line */
-  justify-content: center; /* Center the items horizontally */
-  gap: 20px; /* Spacing between team containers */
-  text-align: center;
-}
-
-.showTeams h1 {
-  font-size: 28px;
-  width: 100%; /* Full width to separate from flex items */
-  margin-bottom: 20px;
-}
-
-/* Style for Each Team Container */
-.showTeams > div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #f8f9fa; /* Light background color */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* 3D effect */
-  border-radius: 8px;
+  background-color: #fff;
   padding: 15px;
-  animation: fadeIn 1s; /* Animation for the team container */
-  width: calc(50% - 20px); /* Half width minus the gap */
-}
-
-/* Keyframes for fadeIn Animation */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-
-/* Style for Team Name and Score */
-.showTeams h2 {
-  background-color: #4CAF50; /* Vibrant green background */
-  color: white;
-  padding: 10px 20px;
-  border-radius: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* 3D effect */
   margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+  transform: rotateY(0);
+  backface-visibility: hidden;
 }
 
-.showTeams p {
-  margin-bottom: 15px;
+.showPlayers li:hover {
+  transform: translateY(-5px) rotateY(5deg);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* Style for the Player List in Each Team */
-.showTeams ul {
+@media (max-width: 768px) {
+  .showPlayers {
+    max-width: 90%;
+  }
+}
+
+.showTeams {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin: 20px auto;
+  max-width: 1200px;
+}
+
+.team-container {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.5s;
+  width: 40%;
+}
+
+.team-container:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.team-container h2 {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 0 0 10px;
+  display: inline-block;
+}
+
+.team-container h3 {
+  margin: 10px 0;
+  color: #365486;
+  font-size: 1.2rem;
+}
+
+.team-container ul {
   list-style-type: none;
   padding: 0;
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  flex-wrap: wrap;
+  margin: 0;
 }
 
-/* Style for Each Player Card */
-.showTeams li {
-  background-color: #007bff; /* Blue background for cards */
-  color: white;
-  padding: 8px 16px;
-  border-radius: 20px; /* Rounded corners for a pill-like shape */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle 3D effect */
+.team-container li {
+  background-color: #ffffff;
+  color: #333;
+  margin-bottom: 5px;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.3s;
+}
+
+.team-container li:hover {
+  background-color: #e7e7e7;
+}
+
+@media (max-width: 768px) {
+  .showTeams {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .team-container {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .team-container {
+    width: calc(100% - 20px);
+  }
+
+  .team-container h2 {
+    font-size: 1rem;
+  }
+
+  .team-container h3 {
+    font-size: 1rem;
+  }
+}
+
+
+.message-error {
+  background-color: #d9534f; /* Red background for error */
+  color: white; /* White text for contrast */
+  padding: 10px;
+  border-radius: 5px; /* Rounded corners */
+  text-align: center; /* Center the text */
+  margin: 20px 0; /* Space above and below the error message */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  animation: shake 0.5s; /* Shake animation for attention */
+  width: 80%; /* Adjust the width as needed */
+  max-width: 400px; /* Maximum width */
+  margin-left: auto; /* Centering */
+  margin-right: auto; /* Centering */
+}
+
+.message-success {
+  background-color: #32CD32; 
+  color: white; /* White text for contrast */
+  padding: 10px;
+  border-radius: 5px; /* Rounded corners */
+  text-align: center; /* Center the text */
+  margin: 20px 0; /* Space above and below the error message */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  animation: shake 0.5s; /* Shake animation for attention */
+  width: 80%; /* Adjust the width as needed */
+  max-width: 400px; /* Maximum width */
+  margin-left: auto; /* Centering */
+  margin-right: auto; /* Centering */
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+}
+
+/* Container for buttons */
+.button-container {
   text-align: center;
-  font-size: 14px;
-  transition: transform 0.3s ease; /* Transition for hover effect */
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }
 
-.showTeams li:hover {
-  transform: scale(1.1); /* Scale up on hover */
-}
-
-/* Basic style for sections containing buttons */
-.createTeams, .startGame {
-  text-align: center; /* Center aligns content within the section */
-  margin: 20px 0; /* Adds margin for spacing */
-}
-
-/* Style for buttons */
-.createTeams button, .startGame button {
-  padding: 10px 20px; /* Padding for button size */
-  background-color: #007bff; /* Button color */
-  color: white; /* Text color */
-  border: none; /* Removes default border */
-  border-radius: 4px; /* Rounded corners for buttons */
-  cursor: pointer; /* Changes cursor to indicate button */
-  font-size: 16px; /* Font size for button text */
-  margin: 5px; /* Margin around buttons */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Shadow for a subtle 3D effect */
-  transition: background-color 0.3s; /* Transition for a hover effect */
-}
-
-.createTeams button:hover, .startGame button:hover {
-  background-color: #0056b3; /* Darker color on hover */
-}
-
-/* Container for all messages */
-.messages {
-  text-align: center; /* Center aligns the messages */
-  margin: 20px 0; /* Space above and below the message container */
-}
-
-/* Common style for message sections */
-.messages section {
-  margin-bottom: 10px; /* Spacing between message sections */
-}
-
-/* Style for error messages */
-.error-message .error {
+/* Styling for both buttons */
+.button-container button {
+  padding: 15px 30px;
   color: white;
-  background-color: #EF4040; /* Red for errors */
-  padding: 10px;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
-  display: inline-block; /* Only as wide as its content */
-  margin: 0 auto; /* Centering */
+  background-color: #007bff; /* Primary blue color */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
-/* Style for success messages */
-.success-message .success {
-  color: white;
-  background-color: #28a745; /* Green for success */
-  padding: 10px;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
-  display: inline-block; /* Only as wide as its content */
-  margin: 0 auto; /* Centering */
+/* Hover effect for buttons */
+.button-container button:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Different color for the Start Game button */
+.startGame button {
+  background-color: #28a745; /* Green color */
+}
+
+@media (max-width: 768px) {
+  .button-container {
+    flex-direction: column;
+  }
 }

@@ -11,21 +11,36 @@ const AddPhrases = () => {
   const { gameId } = useParams()
 
   useEffect(() => {
+    let isCancelled = false;
     const fetchPlayer = async () => {
       try {
         const response = await axios.get(
           `http://localhost:8080/v0/players/`, 
           { withCredentials: true }
           )
-        if (response.data.data.wordsSubmitted === true) {
+        if (!isCancelled && response.data.data.wordsSubmitted === true) {
           navigate(`/games/${gameId}/divide-teams`)
         }
       } catch (error) {
-        console.error('Error Getting Player Data', error)
+        if (error.response) {
+          console.error("Backend throwed error:", error.response.data)
+          setMessage(error.response.data.error)
+        }
+        else if (error.request) {
+          console.error("No response from the server:", error.request)
+          setMessage('Server is down or not reachable')
+        }
+        else {
+          console.error("Error:", error.message)
+          setMessage('Error in making the request')
+        }
       }
     }
     fetchPlayer()
-  }, [gameId])
+    return () => {
+      isCancelled = true;
+    };
+  }, [gameId, navigate])
 
   const handlePhraseChange = (index, value) => {
     const updatedPhrases = phrases.map((phrase, i) => (i === index ? value : phrase))
@@ -42,10 +57,9 @@ const AddPhrases = () => {
         { withCredentials: true }
       )
       setMessage('Phrases submitted successfully.');
-      setIsError(false);
       setTimeout(()=>{
         window.location.reload()
-      },2500)
+      },2000)
     }
     catch (error) {
       setMessage(error.response?.data.error || 'An error occurred');
@@ -88,7 +102,6 @@ const AddPhrases = () => {
         )}
       </div>
     </>
-
   )
 }
 

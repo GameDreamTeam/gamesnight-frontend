@@ -5,8 +5,14 @@
   padding: 20px;
   border-radius: 8px;
   margin: 20px auto;
-  color: #27a89e;
   text-transform: uppercase;
+}
+
+.game-header h1 {
+  color: #27a89e; /* The specified text color */
+  text-transform: uppercase; /* Uppercase text for stylistic choice */
+  font-size: 2.5rem; /* Larger font size for emphasis */
+  margin: 0; /* Reset default margin */
 }
 
 .share-link {
@@ -17,7 +23,7 @@
   margin: 0 auto 30px;
   width: 80%;
   max-width: 600px;
-  color: #30E3CA;
+  color: #40514E;
 }
 
 .link-container {
@@ -38,7 +44,7 @@
 
 .link-container button {
   padding: 10px 20px;
-  background-color: #007bff;
+  background-color: #a9a9a9;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -48,7 +54,7 @@
 }
 
 .link-container button:hover {
-  background-color: green;
+  background-color: lightgreen;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
@@ -58,23 +64,43 @@
   margin-top: 20px;
 }
 
-.message {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 20px auto;
-  width: 100%;
+.message-error {
+  background-color: #d9534f; /* Red background for error */
+  color: white; /* White text for contrast */
+  padding: 10px;
+  border-radius: 5px; /* Rounded corners */
+  text-align: center; /* Center the text */
+  margin: 20px 0; /* Space above and below the error message */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  animation: shake 0.5s; /* Shake animation for attention */
+  width: 80%; /* Adjust the width as needed */
+  max-width: 400px; /* Maximum width */
+  margin-left: auto; /* Centering */
+  margin-right: auto; /* Centering */
 }
 
-.message.success {
-  background-color: #28a745;
-  color: white;
+.message-success {
+  background-color: #32CD32; 
+  color: white; /* White text for contrast */
+  padding: 10px;
+  border-radius: 5px; /* Rounded corners */
+  text-align: center; /* Center the text */
+  margin: 20px 0; /* Space above and below the error message */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  animation: shake 0.5s; /* Shake animation for attention */
+  width: 80%; /* Adjust the width as needed */
+  max-width: 400px; /* Maximum width */
+  margin-left: auto; /* Centering */
+  margin-right: auto; /* Centering */
 }
 
-.message.error {
-  background-color: #dc3545;
-  color: white;
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
 }
+
 
 .join-game {
   background-color: #f8f9fa;
@@ -129,7 +155,7 @@
 }
 
 .player-card {
-  background-color: #DCFFB7;
+  background-color: #AAD7D9;
   padding: 10px;
   border-radius: 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);

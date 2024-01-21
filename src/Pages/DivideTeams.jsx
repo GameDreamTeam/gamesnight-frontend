@@ -39,7 +39,7 @@ const DivideTeams = () => {
       }
     }
     fetchAdmin()
-  }, [])
+  }, [gameId])
 
   useEffect(() => {
     const fetchPlayers = async () => {
@@ -57,7 +57,7 @@ const DivideTeams = () => {
     }
 
     fetchPlayers()
-  }, [])
+  }, [gameId])
 
   useEffect(() => {
     const fetchTeams = async () => {
@@ -72,7 +72,7 @@ const DivideTeams = () => {
       setTimeout(fetchTeams, 3000);
     }
     fetchTeams()
-  }, [])
+  }, [gameId])
 
   useEffect(() => {
     const checkGameState = async () => {
@@ -88,7 +88,7 @@ const DivideTeams = () => {
     }
 
     checkGameState()
-  }, [])
+  }, [gameId, navigate])
 
   const handleCreateTeams = async () => {
     try {
@@ -108,7 +108,7 @@ const DivideTeams = () => {
     try {
       const response = await axios.post(`http://localhost:8080/v0/games/${gameId}/start`, null, { withCredentials: true });
       if (response.data && response.data.status === 'success') {
-        setSuccessMessage('Game started successfully');
+        setSuccessMessage('Get Ready For The Game');
         setTimeout(() => setSuccessMessage(null), 2000);
       }
     } catch (error) {
@@ -118,39 +118,32 @@ const DivideTeams = () => {
   };
 
   return (
-    <div>
+    <>
       <div className="showPlayers">
         <section className="not-submitted">
-          <h2>Players Not Submitted Phrases</h2>
           {players.length > 0 ? (
-            <ul>
-              {players.map((player) => (
-                <li key={player.id}>{player.name}</li>
-              ))}
-            </ul>
+            <div>
+              <h2>Players yet to submit phrases 😔</h2>
+              <ul>
+                {players.map((player) => (
+                  <li key={player.id}>{player.name}</li>
+                ))}
+              </ul>
+            </div>
           ) : (
-            <p>All players have submitted phrases.</p>
+            <p>Waiting for Admin to start the game</p>
           )}
         </section>
       </div>
-      <div className="messages">
-        <section className="error-message">
-          {errorMessage && <p className="error">{errorMessage}</p>}
-        </section>
 
-        <section className="success-message">
-          {successMessage && <p className="success">{successMessage}</p>}
-        </section>
-      </div>
+      {errorMessage && <p className="message-error">{errorMessage}</p>}
+      {successMessage && <p className="message-success">{successMessage}</p>}
 
       <div className="showTeams">
-        <h1>Teams Division</h1>
         {teams && teams.length > 0 ? (
           teams.map((team, index) => (
-            <div key={index}>
+            <div key={index} className="team-container"> {/* Add the class here */}
               <h2>Team {team.name}</h2>
-              <p>Score: {team.score}</p>
-
               <h3>Players:</h3>
               <ul>
                 {team.players.map((player) => (
@@ -160,27 +153,30 @@ const DivideTeams = () => {
             </div>
           ))
         ) : (
-          <p>Waiting for the Host to Make Teams</p>
+          <p></p>
         )}
       </div>
 
-      <div className="createTeams">
-        <section className="submit-words">
-          {currentPlayerId === adminId && (
-            <button onClick={handleCreateTeams}>Create Teams</button>
-          )}
-        </section>
+      <div className="button-container">
+        <div className="createTeams">
+          <section className="submit-words">
+            {currentPlayerId === adminId && (
+              <button onClick={handleCreateTeams}>Create Teams</button>
+            )}
+          </section>
+        </div>
+
+        <div className="startGame">
+          <section className="start-game">
+            {currentPlayerId === adminId && (
+              <button onClick={handleStartGame}>Start Game</button>
+            )}
+          </section>
+        </div>
       </div>
 
-      <div className="startGame">
-        <section className="start-game">
-          {currentPlayerId === adminId && (
-            <button onClick={handleStartGame}>Start Game</button>
-          )}
-        </section>
-      </div>
+    </>
 
-    </div>
   )
 }
 
