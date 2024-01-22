@@ -1,4 +1,4 @@
-.game-container {
+/* .game-container {
     font-family: Arial, sans-serif;
     margin: 10px;
     padding: 10px;
@@ -55,4 +55,292 @@ button:hover {
 
 .end-turn-btn {
     background-color: #555;
+} */
+
+.home-header {
+    text-align: center;
+    /* Center the content */
+    background-color: #f9f9f9;
+    /* Background color for contrast with the 3D effect */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Subtle shadow for a 3D effect */
+    padding: 20px;
+    /* Padding for spacing around the text */
+    border-radius: 8px;
+    /* Rounded corners */
+    margin: 20px auto;
+    /* Vertical margin for spacing and auto for horizontal centering */
+    color: #27a89e;
+    /* The specified text color */
+    font-size: 2.5rem;
+    /* Larger font size for emphasis */
+    margin: 0;
+    /* Reset default margin */
+}
+
+.team-scores {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 20px 0;
+    margin-left: 150px;
+}
+
+.team-score {
+    background-color: #4a90e2;
+    /* Base color for team score boxes */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    width: 40%;
+    /* Adjust width as needed */
+    text-align: center;
+}
+
+.team-score:nth-child(odd) {
+    background-color: #e2544a;
+}
+
+.team-score:hover {
+    transform: translateY(-5px);
+    /* Slight raise effect on hover */
+    background-color: #5cb85c;
+    /* Change color on hover */
+}
+
+.gameplay-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Adjust the gap as needed */
+}
+
+.image-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    order: 1; /* Ensures that this container appears on the left */
+}
+
+.responsive-image{
+    width: 70%;
+}
+.player-info-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    order: 2; 
+}
+
+/* Base styles for the player info */
+.player-info h2 {
+    margin: 10px;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    text-align: center;
+}
+
+/* 3D effect using box-shadow and transform */
+.current-player, .next-player {
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.4);
+    transform: perspective(600px) rotateX(10deg) rotateY(10deg);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Hover effect for additional interactivity */
+.current-player:hover, .next-player:hover {
+    transform: perspective(600px) rotateX(0deg) rotateY(0deg);
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* Keyframe animation for a pulsating effect */
+@keyframes pulsate {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.current-player {
+    animation: pulsate 2s infinite ease-in-out;
+}
+
+.next-player {
+    animation: pulsate 2s infinite ease-in-out;
+    animation-delay: 1s; /* Stagger the animation for variety */
+}
+
+/* Styling for the start-turn-btn */
+.start-turn-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background: linear-gradient(45deg,yellow, green); /* Aesthetic gradient */
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    transform: perspective(1px) translateZ(0); /* For 3D hover effect */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    outline: none;
+}
+
+/* Hover effect for button */
+.start-turn-btn:hover {
+    transform: scale(1.05) translateY(-5px); /* Slight 3D pop effect */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Keyframe animation for a gentle pulsating effect */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+    50% {
+        transform: scale(1.05);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    }
+}
+
+.start-turn-btn:focus {
+    animation: pulse 2s infinite ease-in-out;
+}
+
+/* General styling for the phrase-section */
+.phrase-section {
+    text-align: center;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    margin: 20px;
+}
+
+/* Styling for the current-phrase */
+.current-phrase {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Base button styling */
+.phrase-section button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+    margin: 5px; /* Space between buttons */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Guessed button styling */
+.guessed-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* Not-guessed button styling */
+.not-guessed-btn {
+    background-color: #f44336;
+    color: white;
+}
+
+/* End-turn button styling */
+.end-turn-btn {
+    background-color: #008CBA;
+    color: white;
+}
+
+/* 3D hover effect for buttons */
+.phrase-section button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Animation for buttons when focused */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    }
+    50% {
+        transform: scale(1.1);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    }
+}
+
+.phrase-section button:focus {
+    animation: pulse 1.5s infinite ease-in-out;
+}
+
+/* Styling for the current-phrase */
+.current-phrase {
+    font-size: 24px; /* Set the desired font size */
+    color: #333;
+    margin-bottom: 20px;
+    animation: growText 1s ease-in-out forwards;
+}
+
+/* Keyframes for the growText animation */
+@keyframes growText {
+    from {
+        transform: scale(0.5); /* Start from a smaller scale */
+        opacity: 0; /* Start from transparent */
+    }
+    to {
+        transform: scale(1); /* Scale up to normal size */
+        opacity: 1; /* Fully opaque */
+    }
+}
+
+/* Styling for the game-over-message container */
+.game-over-message {
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 600px;
+    text-align: center;
+    background-color: #ffcccb; /* Soft red background */
+    border: 2px solid #ff4444; /* Slightly darker border for contrast */
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Styling for the message inside the container */
+.game-over-message h2 {
+    color: #d8000c; /* Dark red color for the text */
+    font-size: 22px;
+    margin: 0; /* Removes default margin */
+    animation: fadeIn 2s ease-in-out;
+}
+
+/* Keyframes for the fadeIn animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
