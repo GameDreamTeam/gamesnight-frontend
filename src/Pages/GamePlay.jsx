@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import './GamePlay.css'
 import people from '../assets/people-action.png';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080';
 
 const GamePlay = () => {
   const { gameId } = useParams()
@@ -16,7 +17,7 @@ const GamePlay = () => {
   useEffect(() => {
     const fetchPlayerId = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/v0/players/`, { withCredentials: true })
+        const response = await axios.get(`${API_BASE_URL}/v0/players/`, { withCredentials: true })
         if (response.data.status === 'success') {
           setCurrentPlayerId(response.data.data.id)
         }
@@ -31,7 +32,7 @@ const GamePlay = () => {
   useEffect(() => {
     const fetchGameDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/v0/games/${gameId}/details`, { withCredentials: true })
+        const response = await axios.get(`${API_BASE_URL}/v0/games/${gameId}/details`, { withCredentials: true })
         if (response.data.status === 'success') {
           setGameDetails(response.data.data)
         }
@@ -50,7 +51,7 @@ const GamePlay = () => {
   useEffect(() => {
     const checkGameState = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/v0/games/${gameId}/details`, { withCredentials: true })
+        const response = await axios.get(`${API_BASE_URL}/v0/games/${gameId}/details`, { withCredentials: true })
 
         if (response.data.data.state === 4) {
           setShowGameOverMessage(true);
@@ -70,7 +71,7 @@ const GamePlay = () => {
 
   const handleStartTurn = async () => {
     try {
-      const response = await axios.post(`http://localhost:8080/v0/games/${gameId}/turns/start`, {}, { withCredentials: true });
+      const response = await axios.post(`${API_BASE_URL}/v0/games/${gameId}/turns/start`, {}, { withCredentials: true });
       if (response.data.status === 'success') {
         setCurrentPhrase(response.data.data);
         setIsTurnStarted(true);
@@ -82,7 +83,7 @@ const GamePlay = () => {
 
   const handlePlayerChoice = async (choice) => {
     try {
-      const response = await axios.post(`http://localhost:8080/v0/games/${gameId}/choices`, { playerChoice: choice }, { withCredentials: true });
+      const response = await axios.post(`${API_BASE_URL}/v0/games/${gameId}/choices`, { playerChoice: choice }, { withCredentials: true });
       if (response.data.status === 'success') {
         if (response.data.data === "the game has ended") {
           setShowGameOverMessage(true);
@@ -102,7 +103,7 @@ const GamePlay = () => {
 
   const handleEndTurn = async () => {
     try {
-      await axios.post(`http://localhost:8080/v0/games/${gameId}/turns/end`, {}, { withCredentials: true });
+      await axios.post(`${API_BASE_URL}/v0/games/${gameId}/turns/end`, {}, { withCredentials: true });
       setCurrentPhrase("")
     } catch (error) {
       console.error('Error ending choice', error);

@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './FinishGame.css'
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080';
+
 const FinishGame = () => {
   const [feedback, setFeedback] = useState('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post('http://localhost:8080/v0/feedback', {
+      await axios.post(`${API_BASE_URL}/v0/feedback`, {
         text: feedback
       });
       alert('Feedback submitted successfully!');

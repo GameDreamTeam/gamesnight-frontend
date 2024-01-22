@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './AddPhrases.css';
 import { useParams, useNavigate } from 'react-router-dom';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080';
 
 const AddPhrases = () => {
   const [phrases, setPhrases] = useState(Array.from({ length: 4 }, () => ''))
@@ -15,7 +16,7 @@ const AddPhrases = () => {
     const fetchPlayer = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/v0/players/`,
+          `${API_BASE_URL}/v0/players/`,
           { withCredentials: true }
         )
         if (!isCancelled && response.data.data.wordsSubmitted === true) {
@@ -52,7 +53,7 @@ const AddPhrases = () => {
     try {
       const formattedPhrases = phrases.map((phrase) => ({ input: phrase }))
       axios.post(
-        `http://localhost:8080/v0/games/${gameId}/phrases`,
+        `${API_BASE_URL}/v0/games/${gameId}/phrases`,
         { phraseList: formattedPhrases },
         { withCredentials: true }
       )

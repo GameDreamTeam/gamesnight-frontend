@@ -2,6 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import './JoinGame.css'
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080';
 
 const JoinGame = () => {
   const { gameId } = useParams()
@@ -22,7 +23,7 @@ const JoinGame = () => {
     const fetchPlayerId = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/v0/players/`,
+          `${API_BASE_URL}/v0/players/`,
           { withCredentials: true }
         )
         if (!isCancelled) {
@@ -56,7 +57,7 @@ const JoinGame = () => {
     const fetchLobbyPlayers = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/v0/games/${gameId}/meta`,
+          `${API_BASE_URL}/v0/games/${gameId}/meta`,
           { withCredentials: true }
         )
 
@@ -97,7 +98,7 @@ const JoinGame = () => {
     const checkGameState = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/v0/games/${gameId}/details`,
+          `${API_BASE_URL}/v0/games/${gameId}/details`,
           { withCredentials: true }
         )
         if (!isCancelled && response.data.data.state === 1) {
@@ -135,7 +136,7 @@ const JoinGame = () => {
     e.preventDefault()
     try {
       const response = await axios.post(
-        `http://localhost:8080/v0/games/${gameId}/join`,
+        `${API_BASE_URL}/v0/games/${gameId}/join`,
         { name },
         { withCredentials: true }
       )
@@ -170,7 +171,7 @@ const JoinGame = () => {
   const deletePlayer = async (playerId) => {
     try {
       await axios.delete(
-        `http://localhost:8080/v0/games/${gameId}/players/${playerId}`,
+        `${API_BASE_URL}/v0/games/${gameId}/players/${playerId}`,
         { withCredentials: true }
       )
       setMessage("Player removed Successfully")
@@ -196,7 +197,7 @@ const JoinGame = () => {
     e.preventDefault()
     try {
       await axios.patch(
-        `http://localhost:8080/v0/games/${gameId}/update-state`,
+        `${API_BASE_URL}/v0/games/${gameId}/update-state`,
         null,
         { withCredentials: true }
       )

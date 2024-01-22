@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import './DivideTeams.css';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080';
 
 const DivideTeams = () => {
   const [teams, setTeams] = useState([]);
@@ -16,7 +17,7 @@ const DivideTeams = () => {
   useEffect(() => {
     const fetchPlayerId = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/v0/players/`, { withCredentials: true })
+        const response = await axios.get(`${API_BASE_URL}/v0/players/`, { withCredentials: true })
         if (response.data.status === 'success') {
           setCurrentPlayerId(response.data.data.id)
         }
@@ -30,7 +31,7 @@ const DivideTeams = () => {
   useEffect(() => {
     const fetchAdmin = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/v0/games/${gameId}/meta`, { withCredentials: true })
+        const response = await axios.get(`${API_BASE_URL}/v0/games/${gameId}/meta`, { withCredentials: true })
         if (response.data.status === 'success') {
           setAdminId(response.data.data.adminId)
         }
@@ -44,7 +45,7 @@ const DivideTeams = () => {
   useEffect(() => {
     const fetchPlayers = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/v0/games/${gameId}/meta`, { withCredentials: true });
+        const response = await axios.get(`${API_BASE_URL}/v0/games/${gameId}/meta`, { withCredentials: true });
         if (response.data.status === 'success') {
           const allPlayers = response.data.data.players
           const playersWithWords = allPlayers.filter((player) => player.wordsSubmitted === false)
@@ -62,7 +63,7 @@ const DivideTeams = () => {
   useEffect(() => {
     const fetchTeams = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/v0/games/${gameId}/details`, { withCredentials: true });
+        const response = await axios.get(`${API_BASE_URL}/v0/games/${gameId}/details`, { withCredentials: true });
         if (response.data.status === 'success') {
           setTeams(response.data.data.teams)
         }
@@ -77,7 +78,7 @@ const DivideTeams = () => {
   useEffect(() => {
     const checkGameState = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/v0/games/${gameId}/details`, { withCredentials: true });
+        const response = await axios.get(`${API_BASE_URL}/v0/games/${gameId}/details`, { withCredentials: true });
         if (response.data.status === 'success' && response.data.data.state === 3) {
           navigate(`/games/${gameId}/playing`);
         }
@@ -92,7 +93,7 @@ const DivideTeams = () => {
 
   const handleCreateTeams = async () => {
     try {
-      const response = await axios.post(`http://localhost:8080/v0/games/${gameId}/teams`, null, { withCredentials: true });
+      const response = await axios.post(`${API_BASE_URL}/v0/games/${gameId}/teams`, null, { withCredentials: true });
       if (response.data && response.data.status === 'success') {
         setTeams(response.data.data.teams)
         setSuccessMessage('Teams created successfully');
@@ -106,7 +107,7 @@ const DivideTeams = () => {
 
   const handleStartGame = async () => {
     try {
-      const response = await axios.post(`http://localhost:8080/v0/games/${gameId}/start`, null, { withCredentials: true });
+      const response = await axios.post(`${API_BASE_URL}/v0/games/${gameId}/start`, null, { withCredentials: true });
       if (response.data && response.data.status === 'success') {
         setSuccessMessage('Get Ready For The Game');
         setTimeout(() => setSuccessMessage(null), 2000);

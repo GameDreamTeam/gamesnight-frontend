@@ -136,8 +136,6 @@ const HomePage = () => {
         <img src={people1} alt="House-Party-1" className="responsive-image" />
         <img src={people2} alt="House-Party-2" className="responsive-image" />
       </div>
-
-
     </>
   )
 }
