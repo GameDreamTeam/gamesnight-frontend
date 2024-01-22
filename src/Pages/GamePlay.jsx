@@ -11,7 +11,7 @@ const GamePlay = () => {
   const [currentPlayerId, setCurrentPlayerId] = useState(null)
   const [currentPhrase, setCurrentPhrase] = useState('');
   const [showGameOverMessage, setShowGameOverMessage] = useState(false);
-
+  const [isTurnStarted, setIsTurnStarted] = useState(false);
 
   useEffect(() => {
     const fetchPlayerId = async () => {
@@ -56,7 +56,7 @@ const GamePlay = () => {
           setShowGameOverMessage(true);
           setTimeout(() => {
             navigate(`/games/${gameId}/finish`)
-            window.location.reload() 
+            window.location.reload()
           }, 3000);
         }
       } catch (error) {
@@ -73,6 +73,7 @@ const GamePlay = () => {
       const response = await axios.post(`http://localhost:8080/v0/games/${gameId}/turns/start`, {}, { withCredentials: true });
       if (response.data.status === 'success') {
         setCurrentPhrase(response.data.data);
+        setIsTurnStarted(true);
       }
     } catch (error) {
       console.error('Error starting turn', error);
@@ -109,48 +110,47 @@ const GamePlay = () => {
   }
 
   return (
-    <div class="game-container">
-      <h1 class="home-header">Start your turn when you see the button</h1>
+    <div className="game-container">
+      <h1 className="home-header">🎮 Start your turn when you see the button 🎮</h1>
 
-      <div class="team-scores">
+      <div className="team-scores">
         {gameDetails.teams?.map((team, index) => (
-          <p class="team-score" key={index}>{team.name} Team Score: {team.score}</p>
+          <p className="team-score" key={index}>👥 {team.name} Team Score: {team.score} 🌟</p>
         ))}
       </div>
 
       {showGameOverMessage && (
-          <div className="game-over-message">
-            <h2>The game is over, all phrases have been guessed!</h2>
-          </div>
-        )}
+        <div className="game-over-message">
+          <h2>🎉 The game is over, all phrases have been guessed! 🎉</h2>
+        </div>
+      )}
 
       <div className="gameplay-container">
         <div className="image-container">
           <img src={people} alt="House-Party-3" className="responsive-image" />
         </div>
 
-        <div class="player-info-container">
-          <div class="player-info">
-            <h2 class="current-player">Current Player: {gameDetails.currentPlayer?.name}</h2>
-            <h2 class="next-player">Next Player: {gameDetails.nextPlayer?.name}</h2>
+        <div className="player-info-container">
+          <div className="player-info">
+            <h2 className="current-player">👤 Current Player: {gameDetails.currentPlayer?.name}</h2>
+            <h2 className="next-player">⏭ Next Player: {gameDetails.nextPlayer?.name}</h2>
           </div>
 
-          {gameDetails.currentPlayer?.id === currentPlayerId && (
-            <button class="start-turn-btn" onClick={handleStartTurn}>Start Turn</button>
+          {gameDetails.currentPlayer?.id === currentPlayerId && !isTurnStarted && (
+            <button className="start-turn-btn" onClick={handleStartTurn}>▶️ Start Turn</button>
           )}
 
           {currentPhrase && gameDetails.currentPlayer?.id === currentPlayerId && (
-            <div class="phrase-section">
-              <h3 class="current-phrase">Current Phrase: {currentPhrase}</h3>
-              <button class="guessed-btn" onClick={() => handlePlayerChoice('guessed')}>Guessed</button>
-              <button class="not-guessed-btn" onClick={() => handlePlayerChoice('notGuessed')}>Next Phrase</button>
-              <button class="end-turn-btn" onClick={handleEndTurn}>End Turn</button>
+            <div className="phrase-section">
+              <h3 className="current-phrase">🗨️ Current Phrase: {currentPhrase}</h3>
+              <button className="guessed-btn" onClick={() => handlePlayerChoice('guessed')}>✅ Guessed</button>
+              <button className="not-guessed-btn" onClick={() => handlePlayerChoice('notGuessed')}>➡️ Next Phrase</button>
+              <button className="end-turn-btn" onClick={handleEndTurn}>⏹ End Turn</button>
             </div>
           )}
         </div>
       </div>
     </div>
-
   )
 }
 
