@@ -267,7 +267,6 @@ button:hover {
     color: white;
 }
 
-/* 3D hover effect for buttons */
 .phrase-section button:hover {
     transform: translateY(-3px);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
@@ -325,7 +324,6 @@ button:hover {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-/* Styling for the message inside the container */
 .game-over-message h2 {
     color: #d8000c; /* Dark red color for the text */
     font-size: 22px;
@@ -333,7 +331,6 @@ button:hover {
     animation: fadeIn 2s ease-in-out;
 }
 
-/* Keyframes for the fadeIn animation */
 @keyframes fadeIn {
     from {
         opacity: 0;

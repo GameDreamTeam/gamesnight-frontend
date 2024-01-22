@@ -56,6 +56,7 @@ const GamePlay = () => {
           setShowGameOverMessage(true);
           setTimeout(() => {
             navigate(`/games/${gameId}/finish`)
+            window.location.reload() 
           }, 3000);
         }
       } catch (error) {
@@ -86,6 +87,7 @@ const GamePlay = () => {
           setShowGameOverMessage(true);
           setTimeout(() => {
             navigate(`/games/${gameId}/finish`)
+            window.location.reload()
           }, 3000);
         } else {
           setCurrentPhrase(response.data.data);
@@ -116,16 +118,16 @@ const GamePlay = () => {
         ))}
       </div>
 
-      <div className="gameplay-container">
-        <div className="image-container">
-          <img src={people} alt="House-Party-3" className="responsive-image" />
-        </div>
-
-        {showGameOverMessage && (
+      {showGameOverMessage && (
           <div className="game-over-message">
             <h2>The game is over, all phrases have been guessed!</h2>
           </div>
         )}
+
+      <div className="gameplay-container">
+        <div className="image-container">
+          <img src={people} alt="House-Party-3" className="responsive-image" />
+        </div>
 
         <div class="player-info-container">
           <div class="player-info">
