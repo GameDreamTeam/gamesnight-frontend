@@ -13,6 +13,7 @@ const GamePlay = () => {
   const [currentPhrase, setCurrentPhrase] = useState('');
   const [showGameOverMessage, setShowGameOverMessage] = useState(false);
   const [isTurnStarted, setIsTurnStarted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchPlayerId = async () => {
@@ -83,7 +84,12 @@ const GamePlay = () => {
 
   const handlePlayerChoice = async (choice) => {
     try {
+      setIsLoading(true); // Start loading
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Wait for 1 second
+
       const response = await axios.post(`${API_BASE_URL}/v0/games/${gameId}/choices`, { playerChoice: choice }, { withCredentials: true });
+      setIsLoading(false); // Stop loading
+
       if (response.data.status === 'success') {
         if (response.data.data === "the game has ended") {
           setShowGameOverMessage(true);
@@ -97,9 +103,9 @@ const GamePlay = () => {
       }
     } catch (error) {
       console.error('Error submitting choice', error);
+      setIsLoading(false); // Stop loading in case of an error
     }
   };
-
 
   const handleEndTurn = async () => {
     try {
@@ -143,12 +149,19 @@ const GamePlay = () => {
 
           {currentPhrase && gameDetails.currentPlayer?.id === currentPlayerId && (
             <div className="phrase-section">
-              <h3 className="current-phrase">🗨️ Current Phrase: {currentPhrase}</h3>
-              <button className="guessed-btn" onClick={() => handlePlayerChoice('guessed')}>✅ Guessed</button>
-              <button className="not-guessed-btn" onClick={() => handlePlayerChoice('notGuessed')}>➡️ Next Phrase</button>
-              <button className="end-turn-btn" onClick={handleEndTurn}>⏹ End Turn</button>
+              {isLoading ? (
+                <h3>Loading next phrase...</h3>
+              ) : (
+                <>
+                  <h3 className="current-phrase">🗨️ Current Phrase: {currentPhrase}</h3>
+                  <button className="guessed-btn" onClick={() => handlePlayerChoice('guessed')}>✅ Guessed</button>
+                  <button className="not-guessed-btn" onClick={() => handlePlayerChoice('notGuessed')}>➡️ Next Phrase</button>
+                  <button className="end-turn-btn" onClick={handleEndTurn}>⏹ End Turn</button>
+                </>
+              )}
             </div>
           )}
+
         </div>
       </div>
     </div>
