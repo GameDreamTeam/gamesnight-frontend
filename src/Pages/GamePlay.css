@@ -341,3 +341,91 @@ button:hover {
         transform: translateY(0);
     }
 }
+
+/* Base Styles */
+/* ... (Include your existing styles here) ... */
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+    /* Adjust game-container for smaller screens */
+    .game-container {
+        width: 100%;
+        margin: 10px auto;
+        padding: 10px;
+    }
+
+    /* Adjust team-scores layout for smaller screens */
+    .team-scores {
+        flex-direction: column;
+        align-items: stretch;
+        margin-left: 0;
+    }
+
+    /* Adjust team-score width for smaller screens */
+    .team-score {
+        width: 100%;
+    }
+
+    /* Adjust gameplay-container layout for smaller screens */
+    .gameplay-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    /* Adjust image-container for smaller screens */
+    .image-container {
+        order: 2; /* Move the image below the player info on small screens */
+    }
+
+    /* Adjust the size of the responsive-image */
+    .responsive-image {
+        width: 100%; /* Full width on small screens */
+    }
+
+    /* Adjust player-info-container for smaller screens */
+    .player-info-container {
+        order: 1; /* Move the player info above the image on small screens */
+    }
+
+    /* Adjust font sizes for smaller screens */
+    .home-header {
+        font-size: 1.8rem;
+    }
+
+    .current-phrase {
+        font-size: 20px;
+    }
+
+    .player-info h2 {
+        font-size: 18px;
+    }
+
+    .game-over-message h2 {
+        font-size: 20px;
+    }
+
+    /* Adjust button sizes for better touch interaction */
+    button {
+        padding: 12px 24px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    /* Further adjustments for very small screens like mobile phones */
+
+    .home-header {
+        font-size: 1.5rem;
+    }
+
+    .current-phrase {
+        font-size: 18px;
+    }
+
+    .player-info h2 {
+        font-size: 16px;
+    }
+
+    .game-over-message h2 {
+        font-size: 18px;
+    }
+}
