@@ -429,3 +429,32 @@ button:hover {
         font-size: 18px;
     }
 }
+
+.timer {
+    font-size: 20px; /* Larger font size for visibility */
+    color: #d9534f; /* Red color for urgency */
+    background-color: #fff3cd; /* Light background for contrast */
+    border: 1px solid #ffeeba; /* Subtle border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px; /* Padding for space around the text */
+    margin: 10px 0; /* Margin for spacing */
+    text-align: center; /* Center the text */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+    width: fit-content; /* Adjust width to content */
+    margin-left: auto; /* Centering the timer */
+    margin-right: auto; /* Centering the timer */
+    animation: pulse 1s infinite alternate; /* Attention grabbing animation */
+}
+
+/* Keyframes for pulse animation */
+@keyframes pulse {
+    from {
+        transform: scale(1);
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    to {
+        transform: scale(1.05);
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    }
+}
+

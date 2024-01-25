@@ -16,7 +16,7 @@ const JoinGame = () => {
   const [adminId, setAdminId] = useState(null)
   const [currentPlayerId, setCurrentPlayerId] = useState(null)
   const [copied, setCopied] = useState(false);
-  const gameLink = `http://localhost:3000/games/${gameId}`
+  const gameLink = window.location.href
 
   useEffect(() => {
     let isCancelled = false;
@@ -82,7 +82,6 @@ const JoinGame = () => {
           setError('Error in making the request')
         }
       }
-      setTimeout(fetchLobbyPlayers, 4000);
     }
 
     fetchLobbyPlayers()

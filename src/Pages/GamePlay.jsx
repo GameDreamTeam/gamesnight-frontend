@@ -14,6 +14,8 @@ const GamePlay = () => {
   const [showGameOverMessage, setShowGameOverMessage] = useState(false);
   const [isTurnStarted, setIsTurnStarted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [timer, setTimer] = useState(null);
+  const [showTimerText, setShowTimerText] = useState(false);
 
   useEffect(() => {
     const fetchPlayerId = async () => {
@@ -31,30 +33,33 @@ const GamePlay = () => {
   }, [])
 
   useEffect(() => {
+    let isCancelled = false;
     const fetchGameDetails = async () => {
       try {
         const response = await axios.get(`${API_BASE_URL}/v0/games/${gameId}/details`, { withCredentials: true })
-        if (response.data.status === 'success') {
+        if (!isCancelled) {
           setGameDetails(response.data.data)
         }
       } catch (error) {
         console.error('Error fetching game details', error)
       }
-
-      setTimeout(() => {
-        fetchGameDetails()
-      }, 2000)
     }
 
     fetchGameDetails()
+
+    const intervalId = setInterval(fetchGameDetails, 2000)
+    return () => {
+      isCancelled = true;
+      clearInterval(intervalId);
+    };
   }, [gameId])
 
   useEffect(() => {
+    let isCancelled = false;
     const checkGameState = async () => {
       try {
         const response = await axios.get(`${API_BASE_URL}/v0/games/${gameId}/details`, { withCredentials: true })
-
-        if (response.data.data.state === 4) {
+        if (response.data.data.state === 4 && !isCancelled) {
           setShowGameOverMessage(true);
           setTimeout(() => {
             navigate(`/games/${gameId}/finish`)
@@ -64,46 +69,49 @@ const GamePlay = () => {
       } catch (error) {
         console.error('Error checking game state', error)
       }
-      setTimeout(checkGameState, 4000)
     }
 
     checkGameState()
+
+    const intervalId = setInterval(checkGameState, 2000)
+    return () => {
+      isCancelled = true;
+      clearInterval(intervalId);
+    };
   }, [gameId, navigate])
+
+  const handlePlayerChoice = async (choice) => {
+    try {
+      setIsLoading(true);
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      const response = await axios.post(`${API_BASE_URL}/v0/games/${gameId}/choices`, { playerChoice: choice }, { withCredentials: true });
+      setIsLoading(false);
+
+      if (response.data.data === "the game has ended") {
+        setShowGameOverMessage(true);
+        setTimeout(() => {
+          navigate(`/games/${gameId}/finish`)
+          window.location.reload()
+        }, 3000);
+      } else {
+        setCurrentPhrase(response.data.data);
+      }
+    } catch (error) {
+      console.error('Error submitting choice', error);
+      setIsLoading(false);
+    }
+  };
 
   const handleStartTurn = async () => {
     try {
       const response = await axios.post(`${API_BASE_URL}/v0/games/${gameId}/turns/start`, {}, { withCredentials: true });
-      if (response.data.status === 'success') {
-        setCurrentPhrase(response.data.data);
-        setIsTurnStarted(true);
-      }
+      setCurrentPhrase(response.data.data);
+      setIsTurnStarted(true);
+      setTimer(10);
+      setShowTimerText(true)
     } catch (error) {
       console.error('Error starting turn', error);
-    }
-  };
-
-  const handlePlayerChoice = async (choice) => {
-    try {
-      setIsLoading(true); // Start loading
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Wait for 1 second
-
-      const response = await axios.post(`${API_BASE_URL}/v0/games/${gameId}/choices`, { playerChoice: choice }, { withCredentials: true });
-      setIsLoading(false); // Stop loading
-
-      if (response.data.status === 'success') {
-        if (response.data.data === "the game has ended") {
-          setShowGameOverMessage(true);
-          setTimeout(() => {
-            navigate(`/games/${gameId}/finish`)
-            window.location.reload()
-          }, 3000);
-        } else {
-          setCurrentPhrase(response.data.data);
-        }
-      }
-    } catch (error) {
-      console.error('Error submitting choice', error);
-      setIsLoading(false); // Stop loading in case of an error
     }
   };
 
@@ -115,6 +123,29 @@ const GamePlay = () => {
       console.error('Error ending choice', error);
     }
   }
+
+  const countdown = () => {
+    setTimer((prevTime) => prevTime > 0 ? prevTime - 1 : 0);
+  };
+
+  useEffect(() => {
+    let intervalId;
+
+    if (gameDetails.currentPlayer?.id === currentPlayerId && isTurnStarted) {
+      intervalId = setInterval(countdown, 800);
+    }
+    return () => clearInterval(intervalId);
+  }, [gameDetails.currentPlayer, isTurnStarted]);
+
+  useEffect(() => {
+    if (timer === 0) {
+      setShowTimerText(false);
+      setTimer(10)
+      setIsTurnStarted(false)
+      handleEndTurn();
+    }
+  }, [timer]);
+
 
   return (
     <div className="game-container">
@@ -129,6 +160,12 @@ const GamePlay = () => {
       {showGameOverMessage && (
         <div className="game-over-message">
           <h2>🎉 The game is over, all phrases have been guessed! 🎉</h2>
+        </div>
+      )}
+
+      {gameDetails.currentPlayer?.id === currentPlayerId && showTimerText && (
+        <div className="timer">
+          Time left: {timer}
         </div>
       )}
 
