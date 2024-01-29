@@ -6,16 +6,26 @@ import people from '../assets/people-action.png';
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080';
 
 const GamePlay = () => {
+  const getInitialTimerValue = () => {
+    const storedTimer = localStorage.getItem('timer');
+    return storedTimer ? parseInt(storedTimer, 10) : 30;
+  };
   const { gameId } = useParams()
   const navigate = useNavigate()
   const [gameDetails, setGameDetails] = useState({})
   const [currentPlayerId, setCurrentPlayerId] = useState(null)
   const [currentPhrase, setCurrentPhrase] = useState('');
   const [showGameOverMessage, setShowGameOverMessage] = useState(false);
+  const [showPhraseOverMessage, setShowPhraseOverMessage] = useState(false);
   const [isTurnStarted, setIsTurnStarted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [timer, setTimer] = useState(null);
+  const [timer, setTimer] = useState(getInitialTimerValue);
   const [showTimerText, setShowTimerText] = useState(false);
+  const [phraseLength, setPhraseLength] = useState(0);
+
+  useEffect(() => {
+    localStorage.setItem('timer', timer.toString());
+  }, [timer]);
 
   useEffect(() => {
     const fetchPlayerId = async () => {
@@ -80,6 +90,46 @@ const GamePlay = () => {
     };
   }, [gameId, navigate])
 
+  useEffect(() => {
+    let isCancelled = false;
+    const checkPhraseExists = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/v0/games/${gameId}/current-phrases`, { withCredentials: true })
+        if (!isCancelled) {
+          setPhraseLength(response.data.data.phraseList.length)
+        }
+      } catch (error) {
+        setShowGameOverMessage(true);
+        setTimeout(() => {
+          navigate(`/games/${gameId}/finish`)
+          window.location.reload()
+        }, 3000);
+      }
+    }
+
+    checkPhraseExists()
+
+    const intervalId = setInterval(checkPhraseExists, 2000)
+    return () => {
+      isCancelled = true;
+      clearInterval(intervalId);
+    };
+  }, [gameId, navigate])
+
+  const handleStartTurn = async () => {
+    try {
+      if (!localStorage.getItem('timer')) {
+        setTimer(30); // Reset to 30 only if you don't have a timer saved
+      }
+      const response = await axios.post(`${API_BASE_URL}/v0/games/${gameId}/turns/start`, {}, { withCredentials: true });
+      setCurrentPhrase(response.data.data);
+      setIsTurnStarted(true);
+      setShowTimerText(true)
+    } catch (error) {
+      console.error('Error starting turn', error);
+    }
+  };
+
   const handlePlayerChoice = async (choice) => {
     try {
       setIsLoading(true);
@@ -87,40 +137,29 @@ const GamePlay = () => {
 
       const response = await axios.post(`${API_BASE_URL}/v0/games/${gameId}/choices`, { playerChoice: choice }, { withCredentials: true });
       setIsLoading(false);
-
-      if (response.data.data === "the game has ended") {
-        setShowGameOverMessage(true);
-        setTimeout(() => {
-          navigate(`/games/${gameId}/finish`)
-          window.location.reload()
-        }, 3000);
-      } else {
-        setCurrentPhrase(response.data.data);
-      }
+      setCurrentPhrase(response.data.data);
     } catch (error) {
-      console.error('Error submitting choice', error);
+      console.log(error.response)
+      if (error.response && error.response.data && error.response.data.error === 'all phrases were shown') {
+        setShowPhraseOverMessage(true);
+        await new Promise(resolve => setTimeout(resolve, 3000));
+        setShowPhraseOverMessage(false);
+      }
+      handleEndTurn();
       setIsLoading(false);
     }
   };
 
-  const handleStartTurn = async () => {
-    try {
-      const response = await axios.post(`${API_BASE_URL}/v0/games/${gameId}/turns/start`, {}, { withCredentials: true });
-      setCurrentPhrase(response.data.data);
-      setIsTurnStarted(true);
-      setTimer(10);
-      setShowTimerText(true)
-    } catch (error) {
-      console.error('Error starting turn', error);
-    }
-  };
-
   const handleEndTurn = async () => {
+    setShowTimerText(false);
+    setTimer(30)
+    setIsTurnStarted(false)
+    setCurrentPhrase("")
+
     try {
       await axios.post(`${API_BASE_URL}/v0/games/${gameId}/turns/end`, {}, { withCredentials: true });
-      setCurrentPhrase("")
     } catch (error) {
-      console.error('Error ending choice', error);
+      console.error('Error ending turn', error);
     }
   }
 
@@ -139,9 +178,6 @@ const GamePlay = () => {
 
   useEffect(() => {
     if (timer === 0) {
-      setShowTimerText(false);
-      setTimer(10)
-      setIsTurnStarted(false)
       handleEndTurn();
     }
   }, [timer]);
@@ -162,6 +198,16 @@ const GamePlay = () => {
           <h2>🎉 The game is over, all phrases have been guessed! 🎉</h2>
         </div>
       )}
+
+      {showPhraseOverMessage && (
+        <div className="game-over-message">
+          <h2>All Phrases were Shown, ending your turn !!</h2>
+        </div>
+      )}
+
+      <div className="phrase left">
+        Phrases left to be guessed {phraseLength}
+      </div>
 
       {gameDetails.currentPlayer?.id === currentPlayerId && showTimerText && (
         <div className="timer">

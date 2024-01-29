@@ -458,3 +458,15 @@ button:hover {
     }
 }
 
+.phrase {
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid #ccc;
+    background-color: #f2f2f2;
+    text-align: center;
+  }
+  
+  .left {
+    color: #4CAF50; /* Green color for indicating phrases left */
+  }
+  
