@@ -15,6 +15,7 @@ const App = () => (
   <Router>
     <Suspense fallback={<Loading/>}>
       <Routes>
+        <Route path="/" element={<HomePage/>} />
         <Route path="/home" element={<HomePage/>} />
         <Route path="/games/:gameId" element={<JoinGame/>} />
         <Route path="/games/:gameId/submit" element={<AddPhrases/>} />
