@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios';
 import './HomePage.css';
-import people1 from '../assets/people-1.png';
-import people2 from '../assets/people-2.png';
+import people1 from '../../assets/images/people-1.png';
+import people2 from '../../assets/images/people-2.png';
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080';
 

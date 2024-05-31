@@ -1,13 +1,13 @@
 import React, { Suspense, lazy } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-const HomePage = lazy(() => import('./Pages/HomePage'));
-const JoinGame = lazy(() => import('./Pages/JoinGame'));
-const AddPhrases = lazy(() => import('./Pages/AddPhrases'));
-const DivideTeams = lazy(() => import('./Pages/DivideTeams'));
-const GamePlay = lazy(() => import('./Pages/GamePlay'));
-const FinishGame = lazy(() => import('./Pages/FinishGame'));
-const NotFoundPage = lazy(()=> import('./Pages/NotFoundPage'))
+const HomePage = lazy(() => import('./components/HomePage/HomePage'));
+const JoinGame = lazy(() => import('./components/JoinGame/JoinGame'));
+const AddPhrases = lazy(() => import('./components/AddPhrases/AddPhrases'));
+const DivideTeams = lazy(() => import('./components/DivideTeams/DivideTeams'));
+const GamePlay = lazy(() => import('./components/GamePlay/GamePlay'));
+const FinishGame = lazy(() => import('./components/FinishGame/FinishGame'));
+const NotFoundPage = lazy(()=> import('./components/NotFound/NotFoundPage'))
 
 const Loading = () => <div>Loading...</div>;
 

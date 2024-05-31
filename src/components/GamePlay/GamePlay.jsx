@@ -2,7 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import './GamePlay.css'
-import people from '../assets/people-action.png';
+import people from '../../assets/images/people-action.png';
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080';
 
 const GamePlay = () => {
