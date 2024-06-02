@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import useJoinAsPlayer from '../../hooks/useJoinAsPlayer';
+import {useJoinAsPlayer} from '../../hooks';
 
 const PlayerOptions = ({ setError, navigate, setShowPlayerOptions }) => {
   const [playerGameId, setPlayerGameId] = useState('');

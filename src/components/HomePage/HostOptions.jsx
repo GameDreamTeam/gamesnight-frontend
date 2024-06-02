@@ -1,5 +1,5 @@
 import React from 'react';
-import useJoinAsHost from '../../hooks/useJoinAsHost';
+import {useJoinAsHost} from '../../hooks';
 
 const HostOptions = ({ setError, navigate, setShowPlayerOptions }) => {
   const handleJoinAsHost = useJoinAsHost(setError, navigate);
