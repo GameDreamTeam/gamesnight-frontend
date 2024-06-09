@@ -3,14 +3,14 @@ import axios from 'axios';
 import { API_BASE_URL } from '../constants/api';
 import { useNavigate } from 'react-router-dom';
 
-const useFetchLobbyPlayers = (gameId) => {
-  const [players, setPlayers] = useState([]);
+const useFetchAdmin = (gameId) => {
+  const [adminId, setAdminId] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     let isCancelled = false;
 
-    const fetchLobbyPlayers = async () => {
+    const fetchAdmin = async () => {
       try {
         const response = await axios.get(
           `${API_BASE_URL}/v0/games/${gameId}/meta`,
@@ -18,7 +18,7 @@ const useFetchLobbyPlayers = (gameId) => {
         );
 
         if (!isCancelled) {
-          setPlayers(response.data.data.players);
+          setAdminId(response.data.data.adminId);
         }
       } catch (error) {
         if (error.response) {
@@ -33,16 +33,14 @@ const useFetchLobbyPlayers = (gameId) => {
       }
     };
 
-    fetchLobbyPlayers();
-    const intervalId = setInterval(fetchLobbyPlayers, 4000);
+    fetchAdmin();
 
     return () => {
       isCancelled = true;
-      clearInterval(intervalId);
     };
   }, [gameId, navigate]);
 
-  return {players};
+  return {adminId};
 };
 
-export default useFetchLobbyPlayers;
+export default useFetchAdmin;

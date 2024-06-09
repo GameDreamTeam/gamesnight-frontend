@@ -1,41 +1,33 @@
-import { useParams} from 'react-router-dom'
-import React, { useState} from 'react'
-import './JoinGame.css'
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import './JoinGame.css';
 import ShareLink from './ShareLink';
 import SubmitWords from './SubmitWords';
-import { useCheckGameState, useFetchLobbyPlayers, useFetchPlayerId } from '../../hooks';
 import Lobby from './Lobby';
+import { GameProvider } from './GameContext';
 
 const JoinGame = () => {
-  const {gameId} = useParams()
-  const [error, setError] = useState('')
-  const [message, setMessage] = useState('')
-  const [showError, setShowError] = useState(false)
-  const [showMessage, setShowMessage] = useState(false)
-  
-  const {currentPlayerId} = useFetchPlayerId();
-  const { players, adminId } = useFetchLobbyPlayers(gameId);
-  useCheckGameState(gameId);
+  const { gameId } = useParams();
+  const [error, setError] = useState('');
+  const [showError, setShowError] = useState(false);
 
   return (
-    <>
+    <GameProvider gameId={gameId}>
       <div>
         <header className="game-header">
           <h1>🎲 Welcome to the Game: {gameId} 🎮</h1>
         </header>
       </div>
 
-      <ShareLink gameId={gameId}/>
+      <ShareLink gameId={gameId} />
 
-      {showMessage && <div className="message-success">✨ {message}</div>}
+      <Lobby setError={setError} setShowError={setShowError} />
+
+      <SubmitWords setError={setError} setShowError={setShowError} />
+
       {showError && <div className="message-error">⚠️ {error}</div>}
+    </GameProvider>
+  );
+};
 
-      <Lobby currentPlayerId={currentPlayerId} adminId={adminId} gameId={gameId} players={players} setError={setError} setShowError={setShowError} setMessage={setMessage} setShowMessage={setShowMessage}/>
-
-      <SubmitWords isAdmin={currentPlayerId===adminId} gameId={gameId} setError={setError} setShowError={setShowError}/>
-
-    </>
-  )
-}
-
-export default JoinGame
+export default JoinGame;

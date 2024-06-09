@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './AddPhrases.css';
 import { useParams, useNavigate } from 'react-router-dom';
+import Message from './Message';
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080';
 
 const AddPhrases = () => {
@@ -11,9 +12,9 @@ const AddPhrases = () => {
   const navigate = useNavigate()
   const { gameId } = useParams()
 
-  useEffect(() => {
+  useEffect(() => { 
     let isCancelled = false;
-    const fetchPlayer = async () => {
+    const fetchPlayerResponse = async () => {
       try {
         const response = await axios.get(
           `${API_BASE_URL}/v0/players/`,
@@ -37,7 +38,7 @@ const AddPhrases = () => {
         }
       }
     }
-    fetchPlayer()
+    fetchPlayerResponse()
     return () => {
       isCancelled = true;
     };
@@ -95,13 +96,7 @@ const AddPhrases = () => {
         </div>
       </div>
 
-      <div>
-        {message && (
-          <div className={`submit-message ${isError ? 'error' : 'success'}`}>
-            {isError ? '⚠️' : '✅'} {message}
-          </div>
-        )}
-      </div>
+      <Message isError={isError} message={message}/>
 
     </>
   )

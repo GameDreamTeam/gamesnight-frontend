@@ -1,61 +1,66 @@
 .game-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background: #f2f4f8; /* Soft background color */
-    padding: 20px;
-    box-sizing: border-box;
-  }
-  
-  .finish-header {
-    color: #4a90e2; /* Bright blue for emphasis */
-    margin-bottom: 20px;
-    animation: fadeIn 2s ease-in-out; /* Smooth fade-in effect */
-  }
-  
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  
-  form {
-    width: 100%;
-    max-width: 400px;
-  }
-  
-  textarea {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border: 2px solid #4a90e2; /* Bright blue border */
-    border-radius: 8px;
-    transition: border-color 0.3s, box-shadow 0.3s;
-  }
-  
-  textarea:focus {
-    border-color: #78a4f4; /* Lighter blue when focused */
-    box-shadow: 0 0 8px rgba(72, 145, 228, 0.5); /* Subtle glow effect */
-  }
-  
-  .feedback-button {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 8px;
-    border: none;
-    background-color: #5cb85c; /* Green for positive action */
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-  }
-  
-  .feedback-button:hover {
-    background-color: #4cae4c; /* Darker green on hover */
-  }
-  
-  .feedback-button:active {
-    transform: scale(0.98); /* Slight shrink effect on click */
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: #f2f4f8; /* Soft background color */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.finish-header {
+  color: #4a90e2; /* Bright blue for emphasis */
+  margin-bottom: 20px;
+  animation: fadeIn 2s ease-in-out; /* Smooth fade-in effect */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.feedback-form {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.feedback-textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #4a90e2; /* Bright blue border */
+  border-radius: 8px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  resize: none; /* Prevent resizing */
+}
+
+.feedback-textarea:focus {
+  border-color: #78a4f4; /* Lighter blue when focused */
+  box-shadow: 0 0 8px rgba(72, 145, 228, 0.5); /* Subtle glow effect */
+  outline: none; /* Remove default focus outline */
+}
+
+.feedback-button {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  background-color: #5cb85c; /* Green for positive action */
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  margin-top: 10px; /* Add margin between textarea and button */
+}
+
+.feedback-button:hover {
+  background-color: #4cae4c; /* Darker green on hover */
+}
+
+.feedback-button:active {
+  transform: scale(0.98); /* Slight shrink effect on click */
+}
