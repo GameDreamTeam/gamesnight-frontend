@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './FinishGame.css';
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080';
+import { API_BASE_URL } from '../../constants/api';
 
 const FinishGame = () => {
   const [feedback, setFeedback] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
     try {
       await axios.post(`${API_BASE_URL}/v1/feedback`, { text: feedback });
       alert('Feedback submitted successfully!');
@@ -17,6 +19,8 @@ const FinishGame = () => {
     } catch (error) {
       console.error('Error submitting feedback:', error);
       alert('Failed to submit feedback.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -36,9 +40,16 @@ const FinishGame = () => {
           className="feedback-textarea"
           required
         />
-        <button type="submit" className="feedback-button">Submit Feedback 🚀</button>
+        <button type="submit" className="feedback-button" disabled={isLoading}>
+          {isLoading ? 'Submitting...' : 'Submit Feedback 🚀'}
+        </button>
         <button type="button" onClick={handleGoHome} className="home-button">Go Home 🏠</button>
       </form>
+      {isLoading && (
+        <div className="loading-screen">
+          <div className="spinner"></div>
+        </div>
+      )}
     </div>
   );
 }
