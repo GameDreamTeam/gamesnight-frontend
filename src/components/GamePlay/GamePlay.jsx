@@ -2,8 +2,11 @@ import { useParams, useNavigate } from 'react-router-dom'
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import './GamePlay.css'
+import PhraseSection from './PhraseSection';
 import people from '../../assets/images/people-action.png';
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080';
+import { API_BASE_URL } from '../../constants/api';
+import { useFetchPlayerId, useFetchLobbyPlayers, useFetchAdminId, useCheckGameState } from '../../hooks';
+
 
 const GamePlay = () => {
   const getInitialTimerValue = () => {
@@ -11,9 +14,9 @@ const GamePlay = () => {
     return storedTimer ? parseInt(storedTimer, 10) : 30;
   };
   const { gameId } = useParams()
+  const { currentPlayerId } = useFetchPlayerId();
   const navigate = useNavigate()
   const [gameDetails, setGameDetails] = useState({})
-  const [currentPlayerId, setCurrentPlayerId] = useState(null)
   const [currentPhrase, setCurrentPhrase] = useState('');
   const [showGameOverMessage, setShowGameOverMessage] = useState(false);
   const [showPhraseOverMessage, setShowPhraseOverMessage] = useState(false);
@@ -22,25 +25,11 @@ const GamePlay = () => {
   const [timer, setTimer] = useState(getInitialTimerValue);
   const [showTimerText, setShowTimerText] = useState(false);
   const [phraseLength, setPhraseLength] = useState(0);
+  
 
   useEffect(() => {
     localStorage.setItem('timer', timer.toString());
   }, [timer]);
-
-  useEffect(() => {
-    const fetchPlayerId = async () => {
-      try {
-        const response = await axios.get(`${API_BASE_URL}/v0/players/`, { withCredentials: true })
-        if (response.data.status === 'success') {
-          setCurrentPlayerId(response.data.data.id)
-        }
-      } catch (error) {
-        console.error('Error Getting Player Data', error)
-      }
-    }
-
-    fetchPlayerId()
-  }, [])
 
   useEffect(() => {
     let isCancelled = false;
@@ -119,7 +108,7 @@ const GamePlay = () => {
   const handleStartTurn = async () => {
     try {
       if (!localStorage.getItem('timer')) {
-        setTimer(30); // Reset to 30 only if you don't have a timer saved
+        setTimer(30); 
       }
       const response = await axios.post(`${API_BASE_URL}/v0/games/${gameId}/turns/start`, {}, { withCredentials: true });
       setCurrentPhrase(response.data.data);
@@ -231,18 +220,12 @@ const GamePlay = () => {
           )}
 
           {currentPhrase && gameDetails.currentPlayer?.id === currentPlayerId && (
-            <div className="phrase-section">
-              {isLoading ? (
-                <h3>Loading next phrase...</h3>
-              ) : (
-                <>
-                  <h3 className="current-phrase">🗨️ Current Phrase: {currentPhrase}</h3>
-                  <button className="guessed-btn" onClick={() => handlePlayerChoice('guessed')}>✅ Guessed</button>
-                  <button className="not-guessed-btn" onClick={() => handlePlayerChoice('notGuessed')}>➡️ Next Phrase</button>
-                  <button className="end-turn-btn" onClick={handleEndTurn}>⏹ End Turn</button>
-                </>
-              )}
-            </div>
+            <PhraseSection
+              currentPhrase={currentPhrase}
+              isLoading={isLoading}
+              handlePlayerChoice={handlePlayerChoice}
+              handleEndTurn={handleEndTurn}
+            />
           )}
 
         </div>

@@ -64,3 +64,24 @@
 .feedback-button:active {
   transform: scale(0.98); /* Slight shrink effect on click */
 }
+
+.home-button {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  background-color: #007bff; /* Blue for home button */
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  margin-top: 10px; /* Add some space between buttons */
+}
+
+.home-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.home-button:active {
+  transform: scale(0.98); /* Slight shrink effect on click */
+}

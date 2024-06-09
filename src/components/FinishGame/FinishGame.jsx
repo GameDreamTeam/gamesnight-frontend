@@ -1,21 +1,27 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import './FinishGame.css';
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080';
 
 const FinishGame = () => {
   const [feedback, setFeedback] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      await axios.post(`${API_BASE_URL}/v0/feedback`, { text: feedback });
+      await axios.post(`${API_BASE_URL}/v1/feedback`, { text: feedback });
       alert('Feedback submitted successfully!');
       setFeedback('');
     } catch (error) {
       console.error('Error submitting feedback:', error);
       alert('Failed to submit feedback.');
     }
+  };
+
+  const handleGoHome = () => {
+    navigate('/home'); // Navigate to the home page
   };
 
   return (
@@ -31,6 +37,7 @@ const FinishGame = () => {
           required
         />
         <button type="submit" className="feedback-button">Submit Feedback 🚀</button>
+        <button type="button" onClick={handleGoHome} className="home-button">Go Home 🏠</button>
       </form>
     </div>
   );
