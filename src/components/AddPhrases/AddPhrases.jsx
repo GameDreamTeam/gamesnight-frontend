@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import './AddPhrases.css';
 import { useParams, useNavigate } from 'react-router-dom';
+import './AddPhrases.css';
+import { API_BASE_URL } from '../../constants/api';
+import PhraseInputGroup from './PhraseInputGroup';
 import Message from './Message';
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080';
+import { useFetchPlayerResponse } from '../../hooks';
+
 
 const AddPhrases = () => {
   const [phrases, setPhrases] = useState(Array.from({ length: 4 }, () => ''))
@@ -12,37 +15,7 @@ const AddPhrases = () => {
   const navigate = useNavigate()
   const { gameId } = useParams()
 
-  useEffect(() => { 
-    let isCancelled = false;
-    const fetchPlayerResponse = async () => {
-      try {
-        const response = await axios.get(
-          `${API_BASE_URL}/v0/players/`,
-          { withCredentials: true }
-        )
-        if (!isCancelled && response.data.data.wordsSubmitted === true) {
-          navigate(`/games/${gameId}/divide-teams`)
-        }
-      } catch (error) {
-        if (error.response) {
-          console.error("Backend throwed error:", error.response.data)
-          setMessage(error.response.data.error)
-        }
-        else if (error.request) {
-          console.error("No response from the server:", error.request)
-          setMessage('Server is down or not reachable')
-        }
-        else {
-          console.error("Error:", error.message)
-          setMessage('Error in making the request')
-        }
-      }
-    }
-    fetchPlayerResponse()
-    return () => {
-      isCancelled = true;
-    };
-  }, [gameId, navigate])
+  useFetchPlayerResponse(gameId, navigate, setMessage);
 
   const handlePhraseChange = (index, value) => {
     const updatedPhrases = phrases.map((phrase, i) => (i === index ? value : phrase))
@@ -53,7 +26,7 @@ const AddPhrases = () => {
     event.preventDefault();
     try {
       const formattedPhrases = phrases.map((phrase) => ({ input: phrase }))
-      axios.post(
+      await axios.post(
         `${API_BASE_URL}/v0/games/${gameId}/phrases`,
         { phraseList: formattedPhrases },
         { withCredentials: true }
@@ -62,8 +35,7 @@ const AddPhrases = () => {
       setTimeout(() => {
         window.location.reload()
       }, 2000)
-    }
-    catch (error) {
+    } catch (error) {
       setMessage(error.response?.data.error || 'An error occurred');
       setIsError(true)
     }
@@ -76,28 +48,19 @@ const AddPhrases = () => {
           <h2 className="title">📝 Submit Your Phrases</h2>
           <form className="phrases-form" onSubmit={submitPhrases}>
             {phrases.map((phrase, index) => (
-              <div key={index} className="phrase-input-group">
-                <label htmlFor={`phrase-${index}`} className="input-label">
-                  Phrase {index + 1} 🗨️
-                </label>
-                <input
-                  id={`phrase-${index}`}
-                  type="text"
-                  className="input-field"
-                  value={phrase}
-                  onChange={(e) => handlePhraseChange(index, e.target.value)}
-                  placeholder="Enter phrase here"
-                  required
-                />
-              </div>
+              <PhraseInputGroup
+                key={index}
+                index={index}
+                phrase={phrase}
+                handlePhraseChange={handlePhraseChange}
+              />
             ))}
             <button type="submit" className="submit-button">✏️ Submit Phrases</button>
           </form>
         </div>
       </div>
 
-      <Message isError={isError} message={message}/>
-
+      <Message isError={isError} message={message} />
     </>
   )
 }
