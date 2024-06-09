@@ -1,25 +1,22 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import axios from 'axios';
 import { API_BASE_URL } from '../constants/api';
 import { useNavigate } from 'react-router-dom';
 
-const useFetchAdmin = (gameId) => {
-  console.log("Inside fetch admin")
-  const [adminId, setAdminId] = useState(null);
+const useCheckGamePlaying = (gameId) => {
   const navigate = useNavigate();
 
   useEffect(() => {
     let isCancelled = false;
 
-    const fetchAdmin = async () => {
+    const checkGameState = async () => {
       try {
         const response = await axios.get(
-          `${API_BASE_URL}/v0/games/${gameId}/meta`,
+          `${API_BASE_URL}/v0/games/${gameId}/details`,
           { withCredentials: true }
         );
-
-        if (!isCancelled) {
-          setAdminId(response.data.data.adminId);
+        if (!isCancelled && response.data.data.state === 3) {
+          navigate(`/games/${gameId}/playing`);
         }
       } catch (error) {
         if (error.response) {
@@ -32,16 +29,16 @@ const useFetchAdmin = (gameId) => {
           console.error("Error:", error.message);
         }
       }
+      setTimeout(checkGameState, 4000);
     };
 
-    fetchAdmin();
-
+    checkGameState();
+    const intervalId = setInterval(checkGameState, 4000);
     return () => {
       isCancelled = true;
+      clearInterval(intervalId);
     };
   }, [gameId, navigate]);
-
-  return {adminId};
 };
 
-export default useFetchAdmin;
+export default useCheckGamePlaying;
