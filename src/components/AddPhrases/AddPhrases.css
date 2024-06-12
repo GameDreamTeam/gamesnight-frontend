@@ -39,7 +39,7 @@
 }
 
 .input-field {
-  width: 100%; /* Full width for the input field */
+  width: 90%; /* Full width for the input field */
   padding: 10px;
   border-radius: 4px;
   border: 1px solid #ccc;

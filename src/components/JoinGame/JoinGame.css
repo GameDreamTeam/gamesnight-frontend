@@ -209,6 +209,16 @@
   .player-list {
     grid-template-columns: 1fr;
   }
+
+  .next-button {
+    width: 200px;
+    height: 60px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10 auto;
+    margin-left: 50px; 
+  }
 }
 
 .submit-word {
@@ -222,7 +232,7 @@
 }
 
 .next-button {
-  background-color: #4CAF50;
+  background-color: #231ae0;
   color: white;
   padding: 15px 30px;
   font-size: 18px;
@@ -240,7 +250,7 @@
 
 @media (max-width: 600px) {
   .share-link, .join-game, .submit-word {
-    width: 95%;
+    width: 84%;
   }
 
   .link-container, .join-form, .buttons-containers {

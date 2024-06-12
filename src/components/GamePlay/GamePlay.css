@@ -349,7 +349,7 @@ button:hover {
 @media screen and (max-width: 768px) {
     /* Adjust game-container for smaller screens */
     .game-container {
-        width: 100%;
+        width: 80%;
         margin: 10px auto;
         padding: 10px;
     }
@@ -363,7 +363,7 @@ button:hover {
 
     /* Adjust team-score width for smaller screens */
     .team-score {
-        width: 100%;
+        width: 85%;
     }
 
     /* Adjust gameplay-container layout for smaller screens */
