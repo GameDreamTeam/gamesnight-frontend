@@ -74,7 +74,7 @@ const Lobby = ({ setError, setShowError }) => {
             required
           />
           <button type="submit" className="join-game-button">
-            ➡️ Join Game
+            ➡️ JOIN
           </button>
         </form>
         <div className="player-list">

@@ -23,7 +23,7 @@
   margin: 0 auto 30px;
   width: 80%;
   max-width: 600px;
-  color: #D71313;
+  /* color: #D71313; */
 }
 
 .link-container {
@@ -40,25 +40,24 @@
   border: 2px solid #DCF2F1;
   border-radius: 4px;
   font-size: 1rem;
+  font-size: 16px; /* Prevent zooming in on mobile devices */
 }
 
 .link-container button {
   padding: 10px 20px;
-  background-color: #45a049;
-  color: #fff;
+  background-color: #D0D0D0;
+  /* color: white; */
   border: none;
-  border-radius: 200px;
+  border-radius: 4000px;
   cursor: pointer;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  /* box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3); */
 }
 
-.link-container button:hover {
+/* .link-container button:hover {
   background-color: lightgreen;
   transform: translateY(-4px); 
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
+} */
 
 .share-link p:last-of-type {
   font-size: 1.2rem;
@@ -103,9 +102,8 @@
   75% { transform: translateX(-5px); }
 }
 
-
 .join-game {
-  background-color: #f8f9fa;
+  /* background-color: #f8f9fa; */
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   padding: 20px;
   border-radius: 8px;
@@ -133,23 +131,23 @@
   padding: 10px;
   border: 2px solid #DCF2F1;
   border-radius: 4px;
+  font-size: 16px; /* Prevent zooming in on mobile devices */
 }
 
 .join-game-button {
   padding: 10px 20px;
-  background-color: #45a049;
-  color: white;
+  background-color: #D0D0D0;
+  /* color: white; */
   border: none;
-  border-radius: 40000px;
+  border-radius: 4000px;
   cursor: pointer;
-  /* transition: transform 0.2s, box-shadow 0.2s; */
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  /* box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3); */
 }
 
-.join-game-button:hover {
+/* .join-game-button:hover {
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}
+} */
 
 .player-list {
   display: grid;
@@ -159,7 +157,7 @@
 
 .player-card {
   background-color: #37B5B6;
-  color : white;
+  color: white;
   padding: 10px;
   border-radius: 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -192,6 +190,18 @@
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
+.next-button {
+  background-color: #231ae0;
+  color: white;
+  padding: 15px 30px;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.3s ease;
+}
+
 @media (max-width: 768px) {
   .join-game {
     width: 90%;
@@ -211,14 +221,22 @@
   }
 
   .next-button {
-    width: 200px;
-    height: 60px; 
+    /* width: 100px;
+    height: 60px;  */
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 10 auto;
     margin-left: 50px; 
+    font-size: 15px;
   }
+  .link-container button{
+    max-width: 50%;
+  }
+  .join-game-button{
+    max-width: 50%;
+  }
+
 }
 
 .submit-word {
@@ -231,18 +249,6 @@
   margin: auto;
 }
 
-.next-button {
-  background-color: #231ae0;
-  color: white;
-  padding: 15px 30px;
-  font-size: 18px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-  transition: background-color 0.3s ease;
-  transform: translateY(-4px);
-}
 
 .next-button:hover {
   background-color: #45a049;

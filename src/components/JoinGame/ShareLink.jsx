@@ -16,7 +16,7 @@ const ShareLink = ({gameId }) => {
       <div className="link-container">
         <input type="text" value={gameLink} readOnly />
         <button onClick={handleCopyLink}>
-          {copied ? '✅ Copied!' : '📋 Copy Link'}
+          {copied ? '✅ COPIED!' : '📋 COPY'}
         </button>
       </div>
       <p>Or the Code: {gameId}</p>
