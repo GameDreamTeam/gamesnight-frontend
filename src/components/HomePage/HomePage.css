@@ -123,7 +123,7 @@
 }
 
 .responsive-image {
-  max-width: 35%; /* Adjust the width as necessary */
+  max-width: 30%; /* Adjust the width as necessary */
   height: auto; /* Maintain aspect ratio */
   border-radius: 5px; /* Rounded corners */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Shadow for 3D effect */
@@ -139,8 +139,8 @@
     font-size: 1.5rem; /* Smaller font size for smaller screens */
   }
 
-  .game-id-input, .buttons-containers .button {
-    width: 80%; /* Wider input and buttons on smaller screens */
+  .game-id-input, .buttons-containers {
+    width: 40%; /* Wider input and buttons on smaller screens */
     max-width: none; /* Override max-width */
   }
 
