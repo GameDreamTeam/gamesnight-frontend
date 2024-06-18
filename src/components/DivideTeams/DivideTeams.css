@@ -12,7 +12,8 @@
 
 .showPlayers .not-submitted {
   text-align: center;
-  perspective: 1000px;
+  /* perspective: 1000px; */
+  font-size: 20px;
 }
 
 .showPlayers h2 {
@@ -45,12 +46,6 @@
   box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
 }
 
-@media (max-width: 768px) {
-  .showPlayers {
-    max-width: 90%;
-  }
-}
-
 .showTeams {
   display: flex;
   justify-content: space-around;
@@ -75,7 +70,7 @@
 }
 
 .team-container h2 {
-  background-color: #4caf50;
+  /* background-color: #4caf50; */
   color: white;
   padding: 10px;
   border-radius: 4px;
@@ -86,7 +81,7 @@
 
 .team-container h3 {
   margin: 10px 0;
-  color: #365486;
+  /* color: #365486; */
   font-size: 1.2rem;
 }
 
@@ -114,10 +109,15 @@
   .showTeams {
     flex-direction: column;
     align-items: center;
+    max-width: 80%;
   }
 
   .team-container {
-    width: 100%;
+    width: 60%;
+  }
+
+  .showPlayers {
+    max-width: 90%;
   }
 }
 

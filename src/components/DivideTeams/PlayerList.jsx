@@ -13,7 +13,7 @@ const PlayerList = ({ players }) => (
           </ul>
         </div>
       ) : (
-        <p>🎉 Waiting for Admin to start the game 🎮</p>
+        <p>👨‍🍳Let the admin cook</p>
       )}
     </section>
   </div>
